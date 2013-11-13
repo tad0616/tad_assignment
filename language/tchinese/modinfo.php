@@ -13,5 +13,6 @@ define("_MI_TADASSIGN_BNAME1","上傳");
 define("_MI_TADASSIGN_BDESC1","列出目前開放上傳的項目");
 define("_MI_TADASSIGN_BNAME2","優秀作品展示區");
 define("_MI_TADASSIGN_BDESC2","會依照成績排序來取前幾名秀出");
+define("_MI_TADASSIGN_SMNAME2","作品展示");
 
 ?>
