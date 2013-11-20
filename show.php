@@ -36,6 +36,7 @@ function list_tad_assignment_file($assn=""){
   $DBV=get_tad_assignment($assn);
   foreach($DBV as $k=>$v){
     $$k=$v;
+    $xoopsTpl->assign($k,$v);
   }
 
 
