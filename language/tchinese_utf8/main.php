@@ -45,5 +45,6 @@ define("_MD_TADASSIGN_EMAIL","電子信箱");
 define("_MD_TADASSIGN_SCORE","成績");
 define("_MD_TADASSIGN_COMMENT","評語");
 define("_TAD_ASSIGNMENT_WRONG_PASSWD","密碼錯誤，請重新上傳並輸入正確密碼。");
+define("_MD_TADASSIGN_EMPTY","目前無任何上傳主題");
 
 ?>

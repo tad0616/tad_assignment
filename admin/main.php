@@ -34,7 +34,7 @@ function list_tad_assignment($show_function=1){
   	$start_date=date("Y-m-d H:i",xoops_getUserTimestamp($start_date));
   	$end_date=date("Y-m-d H:i",xoops_getUserTimestamp($end_date));
 
-    
+
     $all_data[$i]['assn']=$assn;
     $all_data[$i]['title']=$title;
     $all_data[$i]['passwd']=$passwd;
@@ -43,12 +43,12 @@ function list_tad_assignment($show_function=1){
     $all_data[$i]['uid_name']=$uid_name;
     $all_data[$i]['show']=$show;
     $i++;
-    
+
 	}
-  
+
 	$xoopsTpl->assign('all_data' , $all_data);
 	$xoopsTpl->assign('bar' , $bar);
-  
+
 }
 
 
