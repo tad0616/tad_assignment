@@ -101,7 +101,6 @@ PRIMARY KEY ( `type` )
   return true;
 }
 
-//ÀË¬d¬YÄæ¦ì¬O§_¦s¦b
 function chk_chk2(){
   global $xoopsDB;
   $sql="select count(`up_time`) from ".$xoopsDB->prefix("tad_assignment_file");
@@ -110,7 +109,6 @@ function chk_chk2(){
   return true;
 }
 
-//°õ¦æ§ó·s
 function go_update2(){
   global $xoopsDB;
   $sql="ALTER TABLE ".$xoopsDB->prefix("tad_assignment_file")." ADD `up_time` datetime";
@@ -120,7 +118,6 @@ function go_update2(){
 }
 
 
-//­×¥¿uidÄæ¦ì
 function chk_uid(){
   global $xoopsDB;
   $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
@@ -131,7 +128,6 @@ function chk_uid(){
   return false;
 }
 
-//°õ¦æ§ó·s
 function go_update_uid(){
   global $xoopsDB;
   $sql="ALTER TABLE `".$xoopsDB->prefix("tad_assignment")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
@@ -139,19 +135,17 @@ function go_update_uid(){
   return true;
 }
 
-//«Ø¥ß¥Ø¿ý
 function mk_dir($dir=""){
-    //­YµL¥Ø¿ý¦WºÙ¨q¥XÄµ§i°T®§
+    //颅Y碌L楼脴驴媒娄W潞脵篓q楼X脛碌搂i掳T庐搂
     if(empty($dir))return;
-    //­Y¥Ø¿ý¤£¦s¦bªº¸Ü«Ø¥ß¥Ø¿ý
+    //颅Y楼脴驴媒陇拢娄s娄b陋潞赂脺芦脴楼脽楼脴驴媒
     if (!is_dir($dir)) {
         umask(000);
-        //­Y«Ø¥ß¥¢±Ñ¨q¥XÄµ§i°T®§
+        //颅Y芦脴楼脽楼垄卤脩篓q楼X脛碌搂i掳T庐搂
         mkdir($dir, 0777);
     }
 }
 
-//«þ¨©¥Ø¿ý
 function full_copy( $source="", $target=""){
   if ( is_dir( $source ) ){
     @mkdir( $target );
@@ -206,7 +200,6 @@ function delete_directory($dirname) {
 
 
 
-//°µÁY¹Ï
 function thumbnail($filename="",$thumb_name="",$type="image/jpeg",$width="120"){
 
   ini_set('memory_limit', '50M');

@@ -6,7 +6,7 @@ CREATE TABLE `tad_assignment` (
   `start_date` varchar(255) NOT NULL default '',
   `end_date` varchar(255) NOT NULL default '',
   `note` text NOT NULL,
-  `uid` smallint(5) unsigned NOT NULL default 0,
+  `uid` mediumint(8) unsigned NOT NULL default 0,
   `show` enum('1','0') NOT NULL default '1',
   PRIMARY KEY  (`assn`)
 ) ENGINE=MyISAM;
