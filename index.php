@@ -56,7 +56,7 @@ function insert_tad_assignment_file(){
   }
   $now=date("Y-m-d H:i:s");
 
-  $sql = "insert into ".$xoopsDB->prefix("tad_assignment_file")." (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' , '$now')";
+  $sql = "insert into ".$xoopsDB->prefix("tad_assignment_file")." (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   //取得最後新增資料的流水編號
   $asfsn=$xoopsDB->getInsertId();
