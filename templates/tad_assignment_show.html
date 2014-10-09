@@ -21,7 +21,8 @@
   <div class="hero-unit">
     <{$smarty.const._MD_TADASSIGN_HIDE}>
   </div>
-<{elseif $now_op=="list_tad_assignment_file"}>
+<{/if}>  
+ 
   <link rel='stylesheet' type='text/css' href='<{$xoops_url}>/modules/tadtools/css/iconize.css' />
   <script type='text/javascript' src='<{$xoops_url}>/modules/tadtools/fancyBox/lib/jquery.mousewheel-3.0.6.pack.js'></script>
   <script type='text/javascript' language='javascript' src='<{$xoops_url}>/modules/tadtools/fancyBox/source/jquery.fancybox.js?v=2.1.4'></script>
@@ -66,7 +67,13 @@
   <{foreach from=$file_data item=all}>
     <tr>
       <td><{$all.up_time}></td>
-      <td><a href='<{$smarty.const._TAD_ASSIGNMENT_UPLOAD_URL}><{$all.assn}>/<{$all.asfsn}>.<{$all.sub_name}>'  class="assignment_fancy_<{$assn}>" rel="group" title="<{$all.author}> (<{$all.up_time}>) <{$all.file_name}>"><{$all.file_name}></a></td>
+      <td>
+        <{if $now_op=="list_tad_assignment_file" and $show!="1" and !$isAdmin}>
+        <{$all.file_name}>
+        <{elseif $now_op=="list_tad_assignment_file"}>      
+      	<a href='<{$smarty.const._TAD_ASSIGNMENT_UPLOAD_URL}><{$all.assn}>/<{$all.asfsn}>.<{$all.sub_name}>'  class="assignment_fancy_<{$assn}>" rel="group" title="<{$all.author}> (<{$all.up_time}>) <{$all.file_name}>"><{$all.file_name}></a>
+      	<{/if}>
+      </td>
       <td><{$all.author}></td>
       <{if $isAdmin}>
       <td>
@@ -78,4 +85,4 @@
   </tbody>
   </table>
 
-<{/if}>
+ 
