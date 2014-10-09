@@ -9,7 +9,7 @@ include_once XOOPS_ROOT_PATH."/header.php";
 function list_tad_assignment_menu(){
   global $xoopsDB,$xoopsModule,$isAdmin,$xoopsTpl;
 
-  $where=($isAdmin)?"":"where `show`='1'";
+ // $where=($isAdmin)?"":"where `show`='1'";
 
   $sql = "select assn,title,uid,start_date from ".$xoopsDB->prefix("tad_assignment")." $where order by start_date desc";
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
