@@ -1,0 +1,38 @@
+Tad Assignment 2.31 official version of the functional items (204-09-25 release)
+=================================================
+1. Modify the program so that it conforms with WCAG
+2. Fixed in MySQL strict mode can not issue new event
+
+
+Tad Assignment 2.3 features the official version of the project (release 2014-06-13)
+=================================================
+ 1. Amend the job description does not show the bug
+ 2. Fixed uid field is mediumint (8) Format
+
+
+Tad Assignment 2.2 features the official version of the project (release 2014-04-09)
+=================================================
+ 1. streamline unnecessary functions
+ 2. trimming forum
+
+
+Tad Assignment 2.1 features the official version of the project (release 2013-11-20)
+=================================================
+ 1. Fixed the main menu of sub-options presented no language problems correctly
+ 2. Fixed works open display, visitors can not see the general bug
+ 3. fixed part of the language content
+
+
+Tad Assignment 2.0 features the official version of the project (release 2013-11-12)
+=================================================
+ 1. The comprehensive rewrite of XOOPS 2.5 architecture, set into BootStrap interface.
+ 2. The words of support file extension.
+ 3. Optimize the user interface.
+
+
+Tad Assignment 1.0 features the official version of the project (release 2009-02-13)
+=================================================
+ 1. Easy to use -
+ 2. Can support more than one teacher, opened uploaded topic (teacher need to have management rights)
+ 3. You can set job paid all dates.
+ 4. whether the job can be set to come in.
