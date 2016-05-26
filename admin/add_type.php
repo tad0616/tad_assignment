@@ -13,7 +13,7 @@ function add_type_form()
 
     $all    = "";
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_types") . " order by `type`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[$i]['type'] = ($_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
@@ -27,7 +27,7 @@ function add_type()
 {
     global $xoopsDB;
     $sql = "replace into " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) values('{$_FILES['file']['type']}')";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     mk_type();
 }
@@ -37,7 +37,7 @@ function del_type($type = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment_types") . " where type='{$type}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     mk_type();
 }
@@ -46,7 +46,7 @@ function mk_type()
 {
     global $xoopsDB;
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_types") . " order by `type`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";
     }
@@ -58,7 +58,10 @@ function mk_type()
     fclose($fp);
 }
 /*-----------執行動作判斷區----------*/
-$op = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
+$type = system_CleanVars($_REQUEST, 'type', '', 'string');
 
 switch ($op) {
 
@@ -66,11 +69,13 @@ switch ($op) {
     case "add_type";
         add_type();
         header("location: {$_SERVER['PHP_SELF']}?t={$_FILES['file']['type']}");
+        exit;
         break;
 
     case "del_type";
-        del_type($_GET['type']);
+        del_type($type);
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //預設動作

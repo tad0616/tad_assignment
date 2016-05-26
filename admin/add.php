@@ -27,9 +27,9 @@ function tad_assignment_form($assn = "")
     $uid        = (!isset($DBV['uid'])) ? "" : $DBV['uid'];
     $show       = (!isset($DBV['show'])) ? "1" : $DBV['show'];
 
-    $start_date_form = "<input type='text' value='{$start_date}' size='15' name='start_date' id='start_date' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">";
+    $start_date_form = "<input type='text' value='{$start_date}' size='15'  class='form-control' name='start_date' id='start_date' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">";
 
-    $end_date_form = "<input type='text' value='{$end_date}' size='15' name='end_date' id='end_date' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">";
+    $end_date_form = "<input type='text' value='{$end_date}' size='15'  class='form-control' name='end_date' id='end_date' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">";
 
     $op = (empty($assn)) ? "insert_tad_assignment" : "update_tad_assignment";
 
@@ -52,7 +52,7 @@ function insert_tad_assignment()
     $start_date = strtotime($_POST['start_date']);
     $end_date   = strtotime($_POST['end_date']);
     $sql        = "insert into " . $xoopsDB->prefix("tad_assignment") . " (`title`,`passwd`,`start_date`,`end_date`,`note`,`uid`,`show`) values('{$_POST['title']}','{$_POST['passwd']}','{$start_date}','{$end_date}','{$_POST['note']}','{$uid}','{$_POST['show']}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql);
     //取得最後新增資料的流水編號
     $assn = $xoopsDB->getInsertId();
     return $assn;
@@ -67,20 +67,21 @@ function update_tad_assignment($assn = "")
     $end_date   = strtotime($_POST['end_date']);
 
     $sql = "update " . $xoopsDB->prefix("tad_assignment") . " set  `title` = '{$_POST['title']}', `passwd` = '{$_POST['passwd']}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `note` = '{$_POST['note']}', `uid` = '{$uid}', `show` = '{$_POST['show']}' where assn='$assn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return $assn;
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$assn = (!isset($_REQUEST['assn'])) ? "" : intval($_REQUEST['assn']);
-
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 switch ($op) {
 
     //新增資料
     case "insert_tad_assignment":
         insert_tad_assignment();
         header("location: index.php");
+        exit;
         break;
 
     //輸入表格
@@ -92,12 +93,14 @@ switch ($op) {
     case "delete_tad_assignment";
         delete_tad_assignment($assn);
         header("location: index.php");
+        exit;
         break;
 
     //更新資料
     case "update_tad_assignment";
         update_tad_assignment($assn);
         header("location: index.php");
+        exit;
         break;
 
     //預設動作

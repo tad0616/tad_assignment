@@ -17,7 +17,7 @@ function get_tad_assignment($assn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment") . " where assn='$assn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }

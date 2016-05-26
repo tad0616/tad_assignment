@@ -5,7 +5,7 @@ function tad_new_assignment($options)
     global $xoopsDB, $xoopsModule;
     $now    = xoops_getUserTimestamp(time());
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " where start_date < '$now' and end_date > '$now'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i     = 0;
     $block = "";

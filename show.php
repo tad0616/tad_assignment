@@ -1,11 +1,11 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
-include "header.php";
-$xoopsOption['template_main'] = "tad_assignment_show.html";
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
+include_once "header.php";
+$xoopsOption['template_main'] = set_bootstrap("tad_assignment_show.html");
 include_once XOOPS_ROOT_PATH . "/header.php";
 
-/*-----------function°Ï--------------*/
-//¦C¥X©Ò¦³tad_assignment¸ê®Æ
+/*-----------functionå€--------------*/
+//åˆ—å‡ºæ‰€æœ‰tad_assignmentè³‡æ–™
 function list_tad_assignment_menu()
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
@@ -13,7 +13,7 @@ function list_tad_assignment_menu()
     // $where=($isAdmin)?"":"where `show`='1'";
 
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " $where order by start_date desc";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i       = 0;
     $alldata = "";
@@ -33,7 +33,7 @@ function list_tad_assignment_menu()
     $xoopsTpl->assign('select_assn_all', $alldata);
 }
 
-//¦C¥X©Ò¦³tad_assignment_file¸ê®Æ
+//åˆ—å‡ºæ‰€æœ‰tad_assignment_fileè³‡æ–™
 function list_tad_assignment_file($assn = "")
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
@@ -45,7 +45,7 @@ function list_tad_assignment_file($assn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where assn='{$assn}' order by `up_time`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i    = 0;
     $data = "";
@@ -72,15 +72,30 @@ function list_tad_assignment_file($assn = "")
     $xoopsTpl->assign('assn', $assn);
     $xoopsTpl->assign('file_data', $data);
     $xoopsTpl->assign('now_op', 'list_tad_assignment_file');
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/fancybox.php")) {
+        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    }
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/fancybox.php";
+    $fancybox      = new fancybox(".assignment_fancy_{$assn}");
+    $fancybox_code = $fancybox->render(false);
+    $xoopsTpl->assign('fancybox_code', $fancybox_code);
+
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
+        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    }
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
+    $sweet_alert = new sweet_alert();
+    $sweet_alert->render("delete_func", "show.php?op=delete_tad_assignment_file&assn={$assn}&asfsn=", 'asfsn');
+
 }
 
-//§R°£tad_assignment_file¬Yµ§¸ê®Æ¸ê®Æ
+//åˆªé™¤tad_assignment_fileæŸç­†è³‡æ–™è³‡æ–™
 function delete_tad_assignment_file($asfsn = "")
 {
     global $xoopsDB;
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='{$asfsn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     while ($all = $xoopsDB->fetchArray($result)) {
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -95,20 +110,22 @@ function delete_tad_assignment_file($asfsn = "")
     unlink(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/{$asfsn}.{$sub_name}");
 
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='$asfsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
-$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$assn           = (!isset($_REQUEST['assn'])) ? "" : intval($_REQUEST['assn']);
-$asfsn          = (!isset($_REQUEST['asfsn'])) ? "" : intval($_REQUEST['asfsn']);
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op    = system_CleanVars($_REQUEST, 'op', '', 'string');
+$assn  = system_CleanVars($_REQUEST, 'assn', 0, 'int');
+$asfsn = system_CleanVars($_REQUEST, 'asfsn', 0, 'int');
 
-switch ($_REQUEST['op']) {
+switch ($op) {
 
-    //§R°£¸ê®Æ
+    //åˆªé™¤è³‡æ–™
     case "delete_tad_assignment_file":
         delete_tad_assignment_file($asfsn);
         header("location: show.php?assn=$assn");
+        exit;
         break;
 
     default:
@@ -119,10 +136,8 @@ switch ($_REQUEST['op']) {
         break;
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæžœå€--------------*/
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("bootstrap", get_bootstrap());
-$xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 
 include_once XOOPS_ROOT_PATH . '/footer.php';

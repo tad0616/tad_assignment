@@ -12,15 +12,16 @@ function list_tad_assignment($show_function = 1)
     $sql = "select * from " . $xoopsDB->prefix("tad_assignment") . " order by start_date desc";
 
     //PageBar(資料數, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
 
-    $navbar = new PageBar($total, 20, 10);
-    $mybar  = $navbar->makeBar();
-    $bar    = sprintf(_TAD_TOOLBAR, $mybar['total'], $mybar['current']) . "{$mybar['left']}{$mybar['center']}{$mybar['right']}";
-    $sql .= $mybar['sql'];
+    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+    $PageBar = getPageBar($sql, 10, 10);
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
+    $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
     $i    = 0;
@@ -58,18 +59,21 @@ function delete_tad_assignment($assn = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment") . " where assn='$assn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 /*-----------執行動作判斷區----------*/
-$op = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 
 switch ($op) {
 
     //刪除資料
     case "delete_tad_assignment";
-        delete_tad_assignment($_GET['assn']);
+        delete_tad_assignment($assn);
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //預設動作

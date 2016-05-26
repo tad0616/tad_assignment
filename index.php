@@ -1,17 +1,17 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
-include "header.php";
-$xoopsOption['template_main'] = "tad_assignment_index.html";
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
+include_once "header.php";
+$xoopsOption['template_main'] = set_bootstrap("tad_assignment_index.html");
 include_once XOOPS_ROOT_PATH . "/header.php";
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 
-//¦C¥X©Ò¦³tad_assignment¸ê®Æ
+//åˆ—å‡ºæ‰€æœ‰tad_assignmentè³‡æ–™
 function list_tad_assignment_menu()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     $now    = xoops_getUserTimestamp(time());
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " where start_date < '$now' and end_date > '$now'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
     $data   = "";
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
@@ -31,7 +31,7 @@ function list_tad_assignment_menu()
     $xoopsTpl->assign('now_op', 'list_tad_assignment_menu');
 }
 
-//tad_assignment_file½s¿èªí³æ
+//tad_assignment_fileç·¨è¼¯è¡¨å–®
 function tad_assignment_file_form($assn = "")
 {
     global $xoopsDB, $xoopsTpl;
@@ -46,7 +46,7 @@ function tad_assignment_file_form($assn = "")
     $xoopsTpl->assign('now_op', 'tad_assignment_file_form');
 }
 
-//·s¼W¸ê®Æ¨ìtad_assignment_file¤¤
+//æ–°å¢žè³‡æ–™åˆ°tad_assignment_fileä¸­
 function insert_tad_assignment_file()
 {
     global $xoopsDB;
@@ -59,8 +59,8 @@ function insert_tad_assignment_file()
     $now = date("Y-m-d H:i:s");
 
     $sql = "insert into " . $xoopsDB->prefix("tad_assignment_file") . " (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
-    //¨ú±o³Ì«á·s¼W¸ê®Æªº¬y¤ô½s¸¹
+    $xoopsDB->query($sql) or web_error($sql);
+    //å–å¾—æœ€å¾Œæ–°å¢žè³‡æ–™çš„æµæ°´ç·¨è™Ÿ
     $asfsn = $xoopsDB->getInsertId();
 
     upload_file($asfsn, $_POST['assn']);
@@ -68,7 +68,7 @@ function insert_tad_assignment_file()
     return $_POST['assn'];
 }
 
-//¤W¶ÇÀÉ®×
+//ä¸Šå‚³æª”æ¡ˆ
 function upload_file($asfsn = "", $assn = "")
 {
     global $xoopsDB;
@@ -88,28 +88,31 @@ function upload_file($asfsn = "", $assn = "")
         if ($flv_handle->processed) {
             $flv_handle->clean();
             $sql = "update " . $xoopsDB->prefix("tad_assignment_file") . " set file_name='{$_FILES['file']['name']}',file_size='{$_FILES['file']['size']}' ,file_type='{$_FILES['file']['type']}',`up_time`='$now'  where asfsn='$asfsn'";
-            $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+            $xoopsDB->queryF($sql) or web_error($sql);
         } else {
             $sql = "delete from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='{$asfsn}'";
-            $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+            $xoopsDB->query($sql) or web_error($sql);
             redirect_header($_SERVER['PHP_SELF'], 3, "Error:" . $flv_handle->error);
         }
     }
 }
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
-$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$assn           = (!isset($_REQUEST['assn'])) ? "" : intval($_REQUEST['assn']);
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
 
-switch ($_REQUEST['op']) {
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 
-    //·s¼W¸ê®Æ
+switch ($op) {
+
+    //æ–°å¢žè³‡æ–™
     case "insert_tad_assignment_file":
         $assn = insert_tad_assignment_file();
         header("location: show.php?assn=$assn");
+        exit;
         break;
 
-    //¹w³]°Ê§@
+    //é è¨­å‹•ä½œ
     default:
         if (!empty($assn)) {
             tad_assignment_file_form($assn);
@@ -119,10 +122,8 @@ switch ($_REQUEST['op']) {
         break;
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæžœå€--------------*/
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("bootstrap", get_bootstrap());
-$xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 
 include_once XOOPS_ROOT_PATH . '/footer.php';
