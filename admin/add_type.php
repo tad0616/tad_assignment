@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_assignment_adm_add_type.html";
+$xoopsOption['template_main'] = "tad_assignment_adm_add_type.tpl";
 include_once "header.php";
 include_once "../function.php";
 

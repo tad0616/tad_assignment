@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_assignment_index.html");
+$xoopsOption['template_main'] = "tad_assignment_index.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -50,13 +50,23 @@ function tad_assignment_file_form($assn = "")
 function insert_tad_assignment_file()
 {
     global $xoopsDB;
+    if (empty($_FILES['file']['name'])) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADASSIGN_NEED_FILE);
+    }
+
     $assignment = get_tad_assignment($_POST['assn']);
 
     if ($_POST['passwd'] != $assignment['passwd']) {
         redirect_header($_SERVER['PHP_SELF'], 3, _TAD_ASSIGNMENT_WRONG_PASSWD);
-        exit;
     }
     $now = date("Y-m-d H:i:s");
+
+    $myts               = MyTextSanitizer::getInstance();
+    $_POST['show_name'] = $myts->addSlashes($_POST['show_name']);
+    $_POST['desc']      = $myts->addSlashes($_POST['desc']);
+    $_POST['author']    = $myts->addSlashes($_POST['author']);
+    $_POST['email']     = $myts->addSlashes($_POST['email']);
+    $_POST['assn']      = intval($_POST['assn']);
 
     $sql = "insert into " . $xoopsDB->prefix("tad_assignment_file") . " (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
     $xoopsDB->query($sql) or web_error($sql);

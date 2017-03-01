@@ -3,10 +3,10 @@
 
   <{if $all}>
     <div class="form-group">
-      <label class="col-md-3 control-label">
+      <label class="col-sm-3 control-label">
         <{$smarty.const._MD_TADASSIGN_SELECT_ASSN}>
       </label>
-      <div class="col-md-9">
+      <div class="col-sm-9">
         <select onChange="window.location.href='index.php?assn='+this.value" class="form-control">
           <option value=''><{$smarty.const._MD_TADASSIGN_SELECT_ASSN}></option>
           <{foreach from=$all item=data}>
@@ -37,6 +37,10 @@
       <tr>
         <th><{$smarty.const._MD_TADASSIGN_FILE}></th>
         <td><input name="file" type="file" size=40></td>
+      </tr>
+      <tr>
+        <th><{$smarty.const._MD_TADASSIGN_DESC}></th>
+        <td><textarea name="desc" rows=4 class="form-control"></textarea></td>
       </tr>
       <tr>
         <th><{$smarty.const._MD_TADASSIGN_AUTHOR}></th>

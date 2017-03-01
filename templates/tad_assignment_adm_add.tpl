@@ -5,33 +5,33 @@
   <form action="add.php" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
 
     <div class="form-group">
-      <label class="col-md-2 control-label"><{$smarty.const._MA_TADASSIGN_TITLE}></label>
-      <div class="col-md-8"><input type="text" name="title" value="<{$title}>" class="form-control" placeholder="<{$smarty.const._MA_TADASSIGN_TITLE}>"></div>
+      <label class="col-sm-2 control-label"><{$smarty.const._MA_TADASSIGN_TITLE}></label>
+      <div class="col-sm-8"><input type="text" name="title" value="<{$title}>" class="form-control" placeholder="<{$smarty.const._MA_TADASSIGN_TITLE}>"></div>
 
     </div>
 
     <div class="form-group">
-      <label class="col-md-2 control-label"><{$smarty.const._MA_TADASSIGN_PASSWD}></label>
-      <div class="col-md-3"><input type="text" name="passwd" class="form-control" value="<{$passwd}>" placeholder="<{$smarty.const._MA_TADASSIGN_PASSWD}>"></div>
-      <div class="col-md-5"><{$smarty.const._MA_TADASSIGN_PASSWD_DESC}></div>
+      <label class="col-sm-2 control-label"><{$smarty.const._MA_TADASSIGN_PASSWD}></label>
+      <div class="col-sm-3"><input type="text" name="passwd" class="form-control" value="<{$passwd}>" placeholder="<{$smarty.const._MA_TADASSIGN_PASSWD}>"></div>
+      <div class="col-sm-5"><{$smarty.const._MA_TADASSIGN_PASSWD_DESC}></div>
 
     </div>
 
     <div class="form-group">
-      <label class="col-md-2 control-label"><{$smarty.const._MA_TADASSIGN_NOTE}></label>
-      <div class="col-md-8"><textarea name="note"  class="form-control" rows=4 placeholder="<{$smarty.const._MA_TADASSIGN_NOTE}>"><{$note}></textarea></div>
+      <label class="col-sm-2 control-label"><{$smarty.const._MA_TADASSIGN_NOTE}></label>
+      <div class="col-sm-8"><textarea name="note"  class="form-control" rows=4 placeholder="<{$smarty.const._MA_TADASSIGN_NOTE}>"><{$note}></textarea></div>
     </div>
 
     <div class="form-group">
-      <label class="col-md-2 control-label"><{$smarty.const._MA_TADASSIGN_START_DATE}></label>
-      <div class="col-md-3"><{$start_date_form}></div>
-      <label class="col-md-2 control-label"><{$smarty.const._MA_TADASSIGN_END_DATE}></label>
-      <div class="col-md-3"><{$end_date_form}></div>
+      <label class="col-sm-2 control-label"><{$smarty.const._MA_TADASSIGN_START_DATE}></label>
+      <div class="col-sm-3"><{$start_date_form}></div>
+      <label class="col-sm-2 control-label"><{$smarty.const._MA_TADASSIGN_END_DATE}></label>
+      <div class="col-sm-3"><{$end_date_form}></div>
     </div>
 
     <div class="form-group">
-      <label class="col-md-2 control-label"><{$smarty.const._MA_TADASSIGN_SHOW}></label>
-      <div class="col-md-8">
+      <label class="col-sm-2 control-label"><{$smarty.const._MA_TADASSIGN_SHOW}></label>
+      <div class="col-sm-8">
         <label class="radio-inline">
           <input type="radio" name="show" id="show1" value="1" <{if $show=='1'}>checked<{/if}>><{$smarty.const._MA_TADASSIGN_SHOW_ASSIGNMENT_YES}>
         </label>
