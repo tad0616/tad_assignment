@@ -44,7 +44,7 @@ function list_tad_assignment_file($assn = "")
         $xoopsTpl->assign($k, $v);
     }
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where assn='{$assn}' order by `up_time`";
+    $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where assn='{$assn}' order by `up_time` desc";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i    = 0;

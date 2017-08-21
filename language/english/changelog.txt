@@ -1,3 +1,9 @@
+Tad Assignment 2.5 (2017-06-16 released)
+=================================================
+1. Complete accessibility 2.0 A level detection
+2. Present the order change from new to old
+
+
 Tad Assignment 2.4.1  (2017-01-08 released)
 =================================================
 1.Change the col-md of boootstrap to col-sm
