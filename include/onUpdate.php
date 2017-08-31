@@ -1,38 +1,49 @@
 <?php
 
-function xoops_module_update_tad_assignment(&$module, $old_version) {
-    GLOBAL $xoopsDB;
+function xoops_module_update_tad_assignment(&$module, $old_version)
+{
+    global $xoopsDB;
 
-    if(!chk_chk1()) go_update1();
-    if(!chk_chk2()) go_update2();
-    if(chk_uid()) go_update_uid();
+    if (!chk_chk1()) {
+        go_update1();
+    }
+    if (!chk_chk2()) {
+        go_update2();
+    }
+    if (chk_uid()) {
+        go_update_uid();
+    }
 
     $old_DateTime=XOOPS_ROOT_PATH."/modules/tad_assignment/class/DateTime";
-    if(is_dir($old_DateTime)){
-      delete_directory($old_DateTime);
+    if (is_dir($old_DateTime)) {
+        delete_directory($old_DateTime);
     }
     return true;
 }
 
 
-function chk_chk1(){
-  global $xoopsDB;
-  $sql="select count(*) from ".$xoopsDB->prefix("tad_assignment_types");
-  $result=$xoopsDB->query($sql);
-  if(empty($result)) return false;
-  return true;
+function chk_chk1()
+{
+    global $xoopsDB;
+    $sql="select count(*) from ".$xoopsDB->prefix("tad_assignment_types");
+    $result=$xoopsDB->query($sql);
+    if (empty($result)) {
+        return false;
+    }
+    return true;
 }
 
-function go_update1(){
-  global $xoopsDB;
-  $sql="CREATE TABLE ".$xoopsDB->prefix("tad_assignment_types")." (
+function go_update1()
+{
+    global $xoopsDB;
+    $sql="CREATE TABLE ".$xoopsDB->prefix("tad_assignment_types")." (
 `type` VARCHAR( 255 ) NOT NULL ,
 PRIMARY KEY ( `type` )
 );";
-  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
 
 
-  $sql="INSERT INTO ".$xoopsDB->prefix("tad_assignment_types")." (`type`) VALUES
+    $sql="INSERT INTO ".$xoopsDB->prefix("tad_assignment_types")." (`type`) VALUES
 ('application/rar'),
 ('application/x-rar-compressed'),
 ('application/arj'),
@@ -97,52 +108,63 @@ PRIMARY KEY ( `type` )
 ('text/xml'),
 ('application/vnd.oasis.opendocument.spreadsheet'),
 ('application/x-vnd.oasis.opendocument.spreadsheet')";
-  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
-  return true;
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    return true;
 }
 
 //ÀË¬d¬YÄæ¦ì¬O§_¦s¦b
-function chk_chk2(){
-  global $xoopsDB;
-  $sql="select count(`up_time`) from ".$xoopsDB->prefix("tad_assignment_file");
-  $result=$xoopsDB->query($sql);
-  if(empty($result)) return false;
-  return true;
+function chk_chk2()
+{
+    global $xoopsDB;
+    $sql="select count(`up_time`) from ".$xoopsDB->prefix("tad_assignment_file");
+    $result=$xoopsDB->query($sql);
+    if (empty($result)) {
+        return false;
+    }
+    return true;
 }
 
 //°õ¦æ§ó·s
-function go_update2(){
-  global $xoopsDB;
-  $sql="ALTER TABLE ".$xoopsDB->prefix("tad_assignment_file")." ADD `up_time` datetime";
-  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+function go_update2()
+{
+    global $xoopsDB;
+    $sql="ALTER TABLE ".$xoopsDB->prefix("tad_assignment_file")." ADD `up_time` datetime";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
 
-  return true;
+    return true;
 }
 
 
 //­×¥¿uidÄæ¦ì
-function chk_uid(){
-  global $xoopsDB;
-  $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+function chk_uid()
+{
+    global $xoopsDB;
+    $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '".$xoopsDB->prefix("tad_assignment")."' AND COLUMN_NAME = 'uid'";
-  $result=$xoopsDB->query($sql);
-  list($type)=$xoopsDB->fetchRow($result);
-  if($type=='smallint')return true;
-  return false;
+    $result=$xoopsDB->query($sql);
+    list($type)=$xoopsDB->fetchRow($result);
+    if ($type=='smallint') {
+        return true;
+    }
+    return false;
 }
 
 //°õ¦æ§ó·s
-function go_update_uid(){
-  global $xoopsDB;
-  $sql="ALTER TABLE `".$xoopsDB->prefix("tad_assignment")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
-  return true;
+function go_update_uid()
+{
+    global $xoopsDB;
+    $sql="ALTER TABLE `".$xoopsDB->prefix("tad_assignment")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    return true;
 }
 
 //«Ø¥ß¥Ø¿ý
-function mk_dir($dir=""){
+function mk_dir($dir="")
+{
     //­YµL¥Ø¿ý¦WºÙ¨q¥XÄµ§i°T®§
-    if(empty($dir))return;
+    if (empty($dir)) {
+        return;
+    }
     //­Y¥Ø¿ý¤£¦s¦bªº¸Ü«Ø¥ß¥Ø¿ý
     if (!is_dir($dir)) {
         umask(000);
@@ -152,51 +174,57 @@ function mk_dir($dir=""){
 }
 
 //«þ¨©¥Ø¿ý
-function full_copy( $source="", $target=""){
-  if ( is_dir( $source ) ){
-    @mkdir( $target );
-    $d = dir( $source );
-    while ( FALSE !== ( $entry = $d->read() ) ){
-      if ( $entry == '.' || $entry == '..' ){
-        continue;
-      }
+function full_copy($source="", $target="")
+{
+    if (is_dir($source)) {
+        @mkdir($target);
+        $d = dir($source);
+        while (false !== ($entry = $d->read())) {
+            if ($entry == '.' || $entry == '..') {
+                continue;
+            }
 
-      $Entry = $source . '/' . $entry;
-      if ( is_dir( $Entry ) ) {
-        full_copy( $Entry, $target . '/' . $entry );
-        continue;
-      }
-      copy( $Entry, $target . '/' . $entry );
+            $Entry = $source . '/' . $entry;
+            if (is_dir($Entry)) {
+                full_copy($Entry, $target . '/' . $entry);
+                continue;
+            }
+            copy($Entry, $target . '/' . $entry);
+        }
+        $d->close();
+    } else {
+        copy($source, $target);
     }
-    $d->close();
-  }else{
-    copy( $source, $target );
-  }
 }
 
 
-function rename_win($oldfile,$newfile) {
-   if (!rename($oldfile,$newfile)) {
-      if (copy ($oldfile,$newfile)) {
-         unlink($oldfile);
-         return TRUE;
-      }
-      return FALSE;
-   }
-   return TRUE;
-}
-
-function delete_directory($dirname) {
-    if (is_dir($dirname))
-        $dir_handle = opendir($dirname);
-    if (!$dir_handle)
+function rename_win($oldfile, $newfile)
+{
+    if (!rename($oldfile, $newfile)) {
+        if (copy($oldfile, $newfile)) {
+            unlink($oldfile);
+            return true;
+        }
         return false;
-    while($file = readdir($dir_handle)) {
+    }
+    return true;
+}
+
+function delete_directory($dirname)
+{
+    if (is_dir($dirname)) {
+        $dir_handle = opendir($dirname);
+    }
+    if (!$dir_handle) {
+        return false;
+    }
+    while ($file = readdir($dir_handle)) {
         if ($file != "." && $file != "..") {
-            if (!is_dir($dirname."/".$file))
+            if (!is_dir($dirname."/".$file)) {
                 unlink($dirname."/".$file);
-            else
+            } else {
                 delete_directory($dirname.'/'.$file);
+            }
         }
     }
     closedir($dir_handle);
@@ -207,37 +235,36 @@ function delete_directory($dirname) {
 
 
 //°µÁY¹Ï
-function thumbnail($filename="",$thumb_name="",$type="image/jpeg",$width="120"){
+function thumbnail($filename="", $thumb_name="", $type="image/jpeg", $width="120")
+{
+    ini_set('memory_limit', '50M');
+    // Get new sizes
+    list($old_width, $old_height) = getimagesize($filename);
 
-  ini_set('memory_limit', '50M');
-  // Get new sizes
-  list($old_width, $old_height) = getimagesize($filename);
+    $percent=($old_width>$old_height)?round($width/$old_width, 2):round($width/$old_height, 2);
 
-  $percent=($old_width>$old_height)?round($width/$old_width,2):round($width/$old_height,2);
+    $newwidth = ($old_width>$old_height)?$width:$old_width * $percent;
+    $newheight = ($old_width>$old_height)?$old_height * $percent:$width;
 
-  $newwidth = ($old_width>$old_height)?$width:$old_width * $percent;
-  $newheight = ($old_width>$old_height)?$old_height * $percent:$width;
+    // Load
+    $thumb = imagecreatetruecolor($newwidth, $newheight);
+    if ($type=="image/jpeg" or $type=="image/jpg" or $type=="image/pjpg" or $type=="image/pjpeg") {
+        $source = imagecreatefromjpeg($filename);
+        $type="image/jpeg";
+    } elseif ($type=="image/png") {
+        $source = imagecreatefrompng($filename);
+        $type="image/png";
+    } elseif ($type=="image/gif") {
+        $source = imagecreatefromgif($filename);
+        $type="image/gif";
+    }
 
-  // Load
-  $thumb = imagecreatetruecolor($newwidth, $newheight);
-  if($type=="image/jpeg" or $type=="image/jpg" or $type=="image/pjpg" or $type=="image/pjpeg"){
-    $source = imagecreatefromjpeg($filename);
-    $type="image/jpeg";
-  }elseif($type=="image/png"){
-    $source = imagecreatefrompng($filename);
-    $type="image/png";
-  }elseif($type=="image/gif"){
-    $source = imagecreatefromgif($filename);
-    $type="image/gif";
-  }
+    // Resize
+    imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
 
-  // Resize
-  imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
+    header("Content-type: image/png");
+    imagepng($thumb, $thumb_name);
 
-  header("Content-type: image/png");
-  imagepng($thumb,$thumb_name);
-
-  return;
-  exit;
+    return;
+    exit;
 }
-?>

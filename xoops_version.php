@@ -86,5 +86,3 @@ $modversion['blocks'][1]['name'] = _MI_TADASSIGN_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADASSIGN_BDESC1;
 $modversion['blocks'][1]['show_func'] = "tad_new_assignment";
 $modversion['blocks'][1]['template'] = "tad_new_assignment.html";
-
-?>

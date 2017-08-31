@@ -11,8 +11,6 @@ if ($xoopsUser) {
 
 $interface_menu[_TAD_TO_MOD]="index.php";
 $interface_menu[_MD_SHOW]="show.php";
-if($isAdmin){
-  $interface_menu[_TAD_TO_ADMIN]="admin/main.php";
+if ($isAdmin) {
+    $interface_menu[_TAD_TO_ADMIN]="admin/main.php";
 }
-
-?>

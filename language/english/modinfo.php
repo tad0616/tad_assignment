@@ -18,7 +18,7 @@ define('_MI_TADASSIGN_SMNAME2', 'Show works');
 
 define('_MI_TADASSIGN_DIRNAME', basename(dirname(dirname(__DIR__))));
 define('_MI_TADASSIGN_HELP_HEADER', __DIR__.'/help/helpheader.html');
-define('_MI_TADASSIGN_BACK_2_ADMIN','Back to Administration of ');
+define('_MI_TADASSIGN_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
-define('_MI_TADASSIGN_HELP_OVERVIEW','Overview');
+define('_MI_TADASSIGN_HELP_OVERVIEW', 'Overview');
