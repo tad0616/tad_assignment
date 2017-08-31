@@ -1,6 +1,6 @@
 <?php
 /**
- * Marquee module
+ * Tad Assignment module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,12 +9,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    XOOPS Project (https://xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package    Marquee
+ * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package      Tad Assignment
  * @since        2.5.0
- * @author     Mage, Mamba
- * @version    $Id $
+ * @author       Tad
+ * @version      $Id $
  **/
 
 include '../../../include/cp_header.php';
@@ -22,7 +22,7 @@ include '../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 
-$module_info =& $module_handler->get($xoopsModule->getVar("mid"));
+$module_info = &$module_handler->get($xoopsModule->getVar("mid"));
 
 $module_info = '<div id="about">
 				<label>' . _AM_XDIR_ABOUT_DESCRIPTION . '</label><text>' . $module_info->getInfo("description") . '</text><br />
@@ -35,7 +35,7 @@ $module_info = '<div id="about">
 $about_admin = new ModuleAdmin();
 $about_admin->addLabel($xoopsModule->getVar("name"));
 $about_admin->addLabel(_AM_XDIR_ABOUT_MODULE_INFO);
-$about_admin->addLineLabel($xoopsModule->getVar("name"), '', 'xoopsfoundation@gmail.com', '', 'module');
+$about_admin->addLineLabel($xoopsModule->getVar("name"), '', '6KJ7RW5DR3VTJ', '', 'module');
 $about_admin->addLineLabel(_AM_XDIR_ABOUT_MODULE_INFO, $module_info, '', '', 'information');
 $about_admin->addChangelogLabel(_AM_XDIR_ABOUT_CHANGELOG);
 
