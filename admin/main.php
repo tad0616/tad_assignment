@@ -1,21 +1,21 @@
 <?php
-/*-----------¤Ş¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 $xoopsOption['template_main'] = "tad_assignment_adm_main.tpl";
 include_once "header.php";
 include_once "../function.php";
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 
-//¦C¥X©Ò¦³tad_assignment¸ê®Æ
+//åˆ—å‡ºæ‰€æœ‰tad_assignmentè³‡æ–™
 function list_tad_assignment($show_function = 1)
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     $sql = "select * from " . $xoopsDB->prefix("tad_assignment") . " order by start_date desc";
 
-    //PageBar(¸ê®Æ¼Æ, ¨C­¶Åã¥Ü´Xµ§¸ê®Æ, ³Ì¦hÅã¥Ü´X­Ó­¶¼Æ¿ï¶µ);
+    //PageBar(è³‡æ–™æ•¸, æ¯é é¡¯ç¤ºå¹¾ç­†è³‡æ–™, æœ€å¤šé¡¯ç¤ºå¹¾å€‹é æ•¸é¸é …);
     $result = $xoopsDB->query($sql) or web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
 
-    //getPageBar($­ìsql»yªk, ¨C­¶Åã¥Ü´Xµ§¸ê®Æ, ³Ì¦hÅã¥Ü´X­Ó­¶¼Æ¿ï¶µ);
+//getPageBar($åŸsqlèªæ³•, æ¯é é¡¯ç¤ºå¹¾ç­†è³‡æ–™, æœ€å¤šé¡¯ç¤ºå¹¾å€‹é æ•¸é¸é …);
     $PageBar = getPageBar($sql, 10, 10);
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
@@ -46,15 +46,13 @@ function list_tad_assignment($show_function = 1)
         $all_data[$i]['uid_name']   = $uid_name;
         $all_data[$i]['show']       = $show;
         $i++;
-
     }
 
     $xoopsTpl->assign('all_data', $all_data);
     $xoopsTpl->assign('bar', $bar);
-
 }
 
-//§R°£tad_assignment¬Yµ§¸ê®Æ¸ê®Æ
+//åˆªé™¤tad_assignmentæŸç­†è³‡æ–™è³‡æ–™
 function delete_tad_assignment($assn = "")
 {
     global $xoopsDB;
@@ -62,26 +60,26 @@ function delete_tad_assignment($assn = "")
     $xoopsDB->queryF($sql) or web_error($sql);
 }
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op   = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 
 switch ($op) {
 
-    //§R°£¸ê®Æ
-    case "delete_tad_assignment";
+    //åˆªé™¤è³‡æ–™
+    case "delete_tad_assignment":
         delete_tad_assignment($assn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
 
-    //¹w³]°Ê§@
+    //é è¨­å‹•ä½œ
     default:
         list_tad_assignment();
         break;
 
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæœå€--------------*/
 include_once 'footer.php';

@@ -1,7 +1,7 @@
 <?php
 $modversion = array();
 
-//---¼Ò²Õ°ò¥»¸ê°T---//
+//---æ¨¡çµ„åŸºæœ¬è³‡è¨Š---//
 $modversion['name']        = _MI_TADASSIGN_NAME;
 $modversion['version']     = 2.5;
 $modversion['description'] = _MI_TADASSIGN_DESC;
@@ -9,11 +9,11 @@ $modversion['author']      = _MI_TADASSIGN_AUTHOR;
 $modversion['credits']     = _MI_TADASSIGN_CREDITS;
 $modversion['help']        = 'page=help';
 $modversion['license']     = 'GNU GPL 2.0';
-$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.tpl/';
+$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
 $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
-//---¼Ò²Õª¬ºA¸ê°T---//
+//---æ¨¡çµ„ç‹€æ…‹è³‡è¨Š---//
 $modversion['release_date']        = '2017-06-16';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
@@ -24,38 +24,38 @@ $modversion['min_php']             = 5.3;
 $modversion['min_xoops']           = '2.5';
 $modversion['min_tadtools']        = '2.02';
 
-//---paypal¸ê°T---//
+//---paypalè³‡è¨Š---//
 $modversion['paypal']                  = array();
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TAD_WEB;
 $modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
-//---¸ê®Æªí¬[ºc---//
+//---è³‡æ–™è¡¨æž¶æ§‹---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][1]        = "tad_assignment";
 $modversion['tables'][2]        = "tad_assignment_file";
 $modversion['tables'][3]        = "tad_assignment_types";
 
-//---±Ò°Ê«á¥xºÞ²z¬É­±¿ï³æ---//
+//---å•Ÿå‹•å¾Œå°ç®¡ç†ç•Œé¢é¸å–®---//
 $modversion['system_menu'] = 1;
 
-//---¦w¸Ë³]©w---//
+//---å®‰è£è¨­å®š---//
 $modversion['onInstall']   = "include/onInstall.php";
 $modversion['onUpdate']    = "include/onUpdate.php";
 $modversion['onUninstall'] = "include/onUninstall.php";
 
-//---ºÞ²z¤¶­±³]©w---//
+//---ç®¡ç†ä»‹é¢è¨­å®š---//
 $modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu']  = "admin/menu.php";
 
-//---¨Ï¥ÎªÌ¥D¿ï³æ³]©w---//
+//---ä½¿ç”¨è€…ä¸»é¸å–®è¨­å®š---//
 $modversion['hasMain']        = 1;
 $modversion['sub'][2]['name'] = _MI_TADASSIGN_SMNAME2;
 $modversion['sub'][2]['url']  = "show.php";
 
-//---¼ËªO³]©w---//
+//---æ¨£æ¿è¨­å®š---//
 $i                                          = 1;
 $modversion['templates'][$i]['file']        = 'tad_assignment_index.tpl';
 $modversion['templates'][$i]['description'] = 'tad_assignment_index.tpl';
@@ -76,7 +76,7 @@ $i++;
 $modversion['templates'][$i]['file']        = 'tad_assignment_adm_add_type.tpl';
 $modversion['templates'][$i]['description'] = 'tad_assignment_adm_add_type.tpl';
 
-//---°Ï¶ô³]©w---//
+//---å€å¡Šè¨­å®š---//
 $modversion['blocks'][1]['file']        = "tad_new_assignment.php";
 $modversion['blocks'][1]['name']        = _MI_TADASSIGN_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADASSIGN_BDESC1;

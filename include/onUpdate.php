@@ -26,7 +26,7 @@ function xoops_module_update_tad_assignment(&$module, $old_version)
 function chk_chk1()
 {
     global $xoopsDB;
-    $sql    = "select count(*) from " . $xoopsDB->prefix("tad_assignment_types");
+    $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_assignment_types");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -113,11 +113,11 @@ PRIMARY KEY ( `type` )
     return true;
 }
 
-//ÀË¬d¬YÄæ¦ì¬O§_¦s¦b
+//檢查某欄位是否存在
 function chk_chk2()
 {
     global $xoopsDB;
-    $sql    = "select count(`up_time`) from " . $xoopsDB->prefix("tad_assignment_file");
+    $sql    = "SELECT count(`up_time`) FROM " . $xoopsDB->prefix("tad_assignment_file");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -126,23 +126,23 @@ function chk_chk2()
     return true;
 }
 
-//°õ¦æ§ó·s
+//執行更新
 function go_update2()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_assignment_file") . " ADD `up_time` datetime";
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_assignment_file") . " ADD `up_time` DATETIME";
     $xoopsDB->queryF($sql) or web_error($sql);
 
     return true;
 }
 
-//­×¥¿uidÄæ¦ì
+//修正uid欄位
 function chk_uid()
 {
     global $xoopsDB;
-    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tad_assignment") . "' AND COLUMN_NAME = 'uid'";
-    $result     = $xoopsDB->query($sql);
+    $result = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;
@@ -151,32 +151,32 @@ function chk_uid()
     return false;
 }
 
-//°õ¦æ§ó·s
+//執行更新
 function go_update_uid()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_assignment") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_assignment") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
     $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 
-//«Ø¥ß¥Ø¿ý
+//建立目錄
 function mk_dir($dir = "")
 {
-    //­YµL¥Ø¿ý¦WºÙ¨q¥XÄµ§i°T®§
+    //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
         return;
     }
 
-    //­Y¥Ø¿ý¤£¦s¦bªº¸Ü«Ø¥ß¥Ø¿ý
+    //若目錄不存在的話建立目錄
     if (!is_dir($dir)) {
         umask(000);
-        //­Y«Ø¥ß¥¢±Ñ¨q¥XÄµ§i°T®§
+        //若建立失敗秀出警告訊息
         mkdir($dir, 0777);
     }
 }
 
-//«þ¨©¥Ø¿ý
+//拷貝目錄
 function full_copy($source = "", $target = "")
 {
     if (is_dir($source)) {
@@ -229,7 +229,6 @@ function delete_directory($dirname)
             } else {
                 delete_directory($dirname . '/' . $file);
             }
-
         }
     }
     closedir($dir_handle);
@@ -237,10 +236,9 @@ function delete_directory($dirname)
     return true;
 }
 
-//°µÁY¹Ï
+//做縮圖
 function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
 {
-
     ini_set('memory_limit', '50M');
     // Get new sizes
     list($old_width, $old_height) = getimagesize($filename);
