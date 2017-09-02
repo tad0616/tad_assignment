@@ -1,5 +1,5 @@
 <?php
-//°Ï¶ô¥D¨ç¦¡ (¦C¥X¥Ø«e¶}©ñ¤W¶Çªº§@·~¶µ¥Ø)
+//å€å¡Šä¸»å‡½å¼ (åˆ—å‡ºç›®å‰é–‹æ”¾ä¸Šå‚³çš„ä½œæ¥­é …ç›®)
 function tad_new_assignment($options)
 {
     global $xoopsDB, $xoopsModule;
