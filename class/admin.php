@@ -194,8 +194,8 @@ class ModuleAdmin
 
             case "tadtools":
 
-                $mhandler         = &xoops_gethandler('module');
-                $xModule          = &$mhandler->getByDirname("tadtools");
+                $mhandler         = xoops_getHandler('module');
+                $xModule          = $mhandler->getByDirname("tadtools");
                 $tadtools_version = round($xModule->getVar('version') / 100, 2);
                 if (substr($tadtools_version, 0, 9) < $value) {
                     $line .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "off.png' >" . sprintf($text, $value, substr($tadtools_version, 0, 9)) . "</span>\n";
@@ -319,7 +319,7 @@ class ModuleAdmin
         $ret .= "</table>\n";
 
 //        $ret .= "<div align=\"center\">";
-        //        $ret .= "<a href=\"http://www.xoops.org\" target=\"_blank\"><img src=\"" . $path . "xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>";
+        //        $ret .= "<a href=\"https://xoops.org\" target=\"_blank\"><img src=\"" . $path . "xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>";
         //        $ret .= "</div>";
 
         return $ret;
@@ -342,7 +342,7 @@ class ModuleAdmin
         $ret .= "</tr>\n";
         $ret .= "</table>\n";
         $ret .= "<div align=\"center\">";
-//        $ret .= "<a href=\"http://www.xoops.org\" target=\"_blank\"><img src=\"" . $path . "xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>";
+//        $ret .= "<a href=\"https://xoops.org\" target=\"_blank\"><img src=\"" . $path . "xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>";
         $ret .= "</div>";
         return $ret;
     }
