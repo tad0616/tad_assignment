@@ -16,7 +16,7 @@ function list_tad_assignment_menu()
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i       = 0;
-    $alldata = "";
+    $alldata = array();
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
@@ -48,7 +48,7 @@ function list_tad_assignment_file($assn = "")
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i    = 0;
-    $data = "";
+    $data = array();
     while ($all = $xoopsDB->fetchArray($result)) {
 
         foreach ($all as $k => $v) {

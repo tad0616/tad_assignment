@@ -21,10 +21,9 @@ function list_tad_assignment($show_function = 1)
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result   = $xoopsDB->query($sql) or web_error($sql);
     $all_data = array();
-    $data = "";
-    $i    = 0;
+    $i        = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         foreach ($all as $k => $v) {
             $$k = $v;

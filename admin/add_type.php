@@ -11,8 +11,8 @@ function add_type_form()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
 
-    $all    = "";
-    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
+    $all    = array();
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
     $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
@@ -45,7 +45,7 @@ function del_type($type = "")
 function mk_type()
 {
     global $xoopsDB;
-    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";

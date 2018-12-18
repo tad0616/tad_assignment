@@ -13,7 +13,7 @@ function list_tad_assignment_menu()
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " where start_date < '$now' and end_date > '$now' order by start_date desc";
     $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 0;
-    $data   = "";
+    $data   = array();
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {

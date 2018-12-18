@@ -1,0 +1,61 @@
+<{$toolbar}>
+<{if $now_op=="list_tad_assignment_menu"}>
+
+  <{if $all}>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label text-sm-right">
+        <{$smarty.const._MD_TADASSIGN_SELECT_ASSN}>
+      </label>
+      <div class="col-sm-9">
+        <select onChange="window.location.href='index.php?assn='+this.value" class="form-control">
+          <option value=''><{$smarty.const._MD_TADASSIGN_SELECT_ASSN}></option>
+          <{foreach from=$all item=data}>
+            <option value='<{$data.assn}>' <{if $assn==$data.assn}>selected<{/if}>><{$data.start_date}> <{$data.title}> (<{$data.uid_name}>) </option>
+          <{/foreach}>
+        </select>
+      </div>
+    </div>
+  <{elseif $isAdmin}>
+    <div class="jumbotron">
+      <{$smarty.const._MD_TADASSIGN_EMPTY}>
+      <a href="admin/add.php" class="btn btn-info"><{$smarty.const._TAD_ADD}></a>
+    </div>
+  <{else}>
+    <div class="jumbotron">
+      <{$smarty.const._MD_TADASSIGN_EMPTY}>
+    </div>
+  <{/if}>
+<{elseif $now_op=="tad_assignment_file_form"}>
+  <h2><{$title}></h2>
+  <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" role="form">
+    <{if $note}>
+      <div class="alert alert-info">
+        <{$note}>
+      </div>
+    <{/if}>
+    <table class="table table-striped table-bordered table-hover">
+      <tr>
+        <th><{$smarty.const._MD_TADASSIGN_FILE}></th>
+        <td><input name="file" type="file" size=40></td>
+      </tr>
+      <tr>
+        <th><{$smarty.const._MD_TADASSIGN_DESC}></th>
+        <td><textarea name="desc" rows=4 class="form-control"></textarea></td>
+      </tr>
+      <tr>
+        <th><{$smarty.const._MD_TADASSIGN_AUTHOR}></th>
+        <td><input name="author" type="text"  class="form-control"></td>
+      </tr>
+      <tr>
+        <th><{$smarty.const._MD_TADASSIGN_INPUT_PASSWD}></th>
+        <td>
+          <input name="passwd" type="password"  class="form-control">
+          <input type="hidden" name="assn" value="<{$assn}>">
+          <input type="hidden" name="op" value="insert_tad_assignment_file">
+          <button type="submit"  class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+<{/if}>
