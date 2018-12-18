@@ -44,7 +44,7 @@
     </div>
 
 
-    <div style="text-align:center;">
+    <div class="text-center">
       <input type="hidden" name="op" value="<{$op}>">
       <input type="hidden" name="assn" value="<{$assn}>">
       <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>

@@ -50,12 +50,14 @@
         <th><{$smarty.const._MD_TADASSIGN_INPUT_PASSWD}></th>
         <td>
           <input name="passwd" type="password"  class="form-control">
-          <input type="hidden" name="assn" value="<{$assn}>">
-          <input type="hidden" name="op" value="insert_tad_assignment_file">
-          <button type="submit"  class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
         </td>
       </tr>
     </table>
+    <div class="text-center">
+        <input type="hidden" name="assn" value="<{$assn}>">
+        <input type="hidden" name="op" value="insert_tad_assignment_file">
+        <button type="submit"  class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
+    </div>
   </form>
 
 <{/if}>
