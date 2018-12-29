@@ -42,7 +42,7 @@ function go_update1()
 `type` VARCHAR( 255 ) NOT NULL ,
 PRIMARY KEY ( `type` )
 );";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     $sql = "INSERT INTO " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) VALUES
 ('application/rar'),
@@ -109,7 +109,7 @@ PRIMARY KEY ( `type` )
 ('text/xml'),
 ('application/vnd.oasis.opendocument.spreadsheet'),
 ('application/x-vnd.oasis.opendocument.spreadsheet')";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     return true;
 }
 
@@ -131,7 +131,7 @@ function go_update2()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_assignment_file") . " ADD `up_time` DATETIME";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     return true;
 }
@@ -156,7 +156,7 @@ function go_update_uid()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_assignment") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     return true;
 }
 

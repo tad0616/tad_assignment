@@ -13,7 +13,7 @@ function list_tad_assignment_menu()
     // $where=($isAdmin)?"":"where `show`='1'";
 
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " $where order by start_date desc";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $i       = 0;
     $alldata = array();
@@ -45,7 +45,7 @@ function list_tad_assignment_file($assn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where assn='{$assn}' order by `up_time` desc";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $i    = 0;
     $data = array();
@@ -95,7 +95,7 @@ function delete_tad_assignment_file($asfsn = "")
     global $xoopsDB;
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='{$asfsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     while ($all = $xoopsDB->fetchArray($result)) {
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -110,7 +110,7 @@ function delete_tad_assignment_file($asfsn = "")
     unlink(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/{$asfsn}.{$sub_name}");
 
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='$asfsn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 }
 
 /*-----------執行動作判斷區----------*/

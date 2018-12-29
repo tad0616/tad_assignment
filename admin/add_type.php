@@ -13,7 +13,7 @@ function add_type_form()
 
     $all    = array();
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $i      = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[$i]['type'] = ($_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
@@ -27,7 +27,7 @@ function add_type()
 {
     global $xoopsDB;
     $sql = "replace into " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) values('{$_FILES['file']['type']}')";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     mk_type();
 }
@@ -37,7 +37,7 @@ function del_type($type = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment_types") . " where type='{$type}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     mk_type();
 }
@@ -46,7 +46,7 @@ function mk_type()
 {
     global $xoopsDB;
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";
     }

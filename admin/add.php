@@ -52,7 +52,7 @@ function insert_tad_assignment()
     $start_date = strtotime($_POST['start_date']);
     $end_date   = strtotime($_POST['end_date']);
     $sql        = "insert into " . $xoopsDB->prefix("tad_assignment") . " (`title`,`passwd`,`start_date`,`end_date`,`note`,`uid`,`show`) values('{$_POST['title']}','{$_POST['passwd']}','{$start_date}','{$end_date}','{$_POST['note']}','{$uid}','{$_POST['show']}')";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     //取得最後新增資料的流水編號
     $assn = $xoopsDB->getInsertId();
     return $assn;
@@ -67,7 +67,7 @@ function update_tad_assignment($assn = "")
     $end_date   = strtotime($_POST['end_date']);
 
     $sql = "update " . $xoopsDB->prefix("tad_assignment") . " set  `title` = '{$_POST['title']}', `passwd` = '{$_POST['passwd']}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `note` = '{$_POST['note']}', `uid` = '{$uid}', `show` = '{$_POST['show']}' where assn='$assn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     return $assn;
 }
 
