@@ -12,7 +12,7 @@ function list_tad_assignment($show_function = 1)
     $sql = "select * from " . $xoopsDB->prefix("tad_assignment") . " order by start_date desc";
 
     //PageBar(資料數, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $total  = $xoopsDB->getRowsNum($result);
 
 //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
@@ -21,7 +21,7 @@ function list_tad_assignment($show_function = 1)
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result   = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result   = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $all_data = array();
     $i        = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -56,7 +56,7 @@ function delete_tad_assignment($assn = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment") . " where assn='$assn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/
