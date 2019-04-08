@@ -16,7 +16,7 @@ define('_MI_TADASSIGN_BDESC2', '會依照成績排序來取前幾名秀出');
 define('_MI_TADASSIGN_SMNAME2', '作品展示');
 
 define('_MI_TADASSIGN_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADASSIGN_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADASSIGN_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADASSIGN_BACK_2_ADMIN', '管理');
 
 //help
