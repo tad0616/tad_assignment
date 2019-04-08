@@ -26,7 +26,7 @@ function xoops_module_update_tad_assignment(&$module, $old_version)
 function chk_chk1()
 {
     global $xoopsDB;
-    $sql    = "select count(*) from " . $xoopsDB->prefix("tad_assignment_types");
+    $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_assignment_types");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -42,7 +42,7 @@ function go_update1()
 `type` VARCHAR( 255 ) NOT NULL ,
 PRIMARY KEY ( `type` )
 );";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     $sql = "INSERT INTO " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) VALUES
 ('application/rar'),
@@ -109,15 +109,15 @@ PRIMARY KEY ( `type` )
 ('text/xml'),
 ('application/vnd.oasis.opendocument.spreadsheet'),
 ('application/x-vnd.oasis.opendocument.spreadsheet')";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
-//ÀË¬d¬YÄæ¦ì¬O§_¦s¦b
+//檢查某欄位是否存在
 function chk_chk2()
 {
     global $xoopsDB;
-    $sql    = "select count(`up_time`) from " . $xoopsDB->prefix("tad_assignment_file");
+    $sql    = "SELECT count(`up_time`) FROM " . $xoopsDB->prefix("tad_assignment_file");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -126,23 +126,23 @@ function chk_chk2()
     return true;
 }
 
-//°õ¦æ§ó·s
+//執行更新
 function go_update2()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_assignment_file") . " ADD `up_time` datetime";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_assignment_file") . " ADD `up_time` DATETIME";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     return true;
 }
 
-//­×¥¿uidÄæ¦ì
+//修正uid欄位
 function chk_uid()
 {
     global $xoopsDB;
-    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tad_assignment") . "' AND COLUMN_NAME = 'uid'";
-    $result     = $xoopsDB->query($sql);
+    $result = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;
@@ -151,96 +151,18 @@ function chk_uid()
     return false;
 }
 
-//°õ¦æ§ó·s
+//執行更新
 function go_update_uid()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_assignment") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_assignment") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return true;
 }
 
-//«Ø¥ß¥Ø¿ý
-function mk_dir($dir = "")
-{
-    //­YµL¥Ø¿ý¦WºÙ¨q¥XÄµ§i°T®§
-    if (empty($dir)) {
-        return;
-    }
-
-    //­Y¥Ø¿ý¤£¦s¦bªº¸Ü«Ø¥ß¥Ø¿ý
-    if (!is_dir($dir)) {
-        umask(000);
-        //­Y«Ø¥ß¥¢±Ñ¨q¥XÄµ§i°T®§
-        mkdir($dir, 0777);
-    }
-}
-
-//«þ¨©¥Ø¿ý
-function full_copy($source = "", $target = "")
-{
-    if (is_dir($source)) {
-        @mkdir($target);
-        $d = dir($source);
-        while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
-
-            $Entry = $source . '/' . $entry;
-            if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
-                continue;
-            }
-            copy($Entry, $target . '/' . $entry);
-        }
-        $d->close();
-    } else {
-        copy($source, $target);
-    }
-}
-
-function rename_win($oldfile, $newfile)
-{
-    if (!rename($oldfile, $newfile)) {
-        if (copy($oldfile, $newfile)) {
-            unlink($oldfile);
-            return true;
-        }
-        return false;
-    }
-    return true;
-}
-
-function delete_directory($dirname)
-{
-    if (is_dir($dirname)) {
-        $dir_handle = opendir($dirname);
-    }
-
-    if (!$dir_handle) {
-        return false;
-    }
-
-    while ($file = readdir($dir_handle)) {
-        if ($file != "." && $file != "..") {
-            if (!is_dir($dirname . "/" . $file)) {
-                unlink($dirname . "/" . $file);
-            } else {
-                delete_directory($dirname . '/' . $file);
-            }
-
-        }
-    }
-    closedir($dir_handle);
-    rmdir($dirname);
-    return true;
-}
-
-//°µÁY¹Ï
+//做縮圖
 function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
 {
-
     ini_set('memory_limit', '50M');
     // Get new sizes
     list($old_width, $old_height) = getimagesize($filename);
@@ -271,4 +193,89 @@ function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $widt
 
     return;
     exit;
+}
+
+
+//建立目錄
+if (!function_exists('mk_dir')) {
+    function mk_dir($dir = "")
+    {
+        //若無目錄名稱秀出警告訊息
+        if (empty($dir)) {
+            return;
+        }
+
+        //若目錄不存在的話建立目錄
+        if (!is_dir($dir)) {
+            umask(000);
+            //若建立失敗秀出警告訊息
+            mkdir($dir, 0777);
+        }
+    }
+}
+
+//拷貝目錄
+if (!function_exists('full_copy')) {
+    function full_copy($source = "", $target = "")
+    {
+        if (is_dir($source)) {
+            @mkdir($target);
+            $d = dir($source);
+            while (false !== ($entry = $d->read())) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+
+                $Entry = $source . '/' . $entry;
+                if (is_dir($Entry)) {
+                    full_copy($Entry, $target . '/' . $entry);
+                    continue;
+                }
+                copy($Entry, $target . '/' . $entry);
+            }
+            $d->close();
+        } else {
+            copy($source, $target);
+        }
+    }
+}
+
+if (!function_exists('rename_win')) {
+    function rename_win($oldfile, $newfile)
+    {
+        if (!rename($oldfile, $newfile)) {
+            if (copy($oldfile, $newfile)) {
+                unlink($oldfile);
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+}
+
+if (!function_exists('delete_directory')) {
+    function delete_directory($dirname)
+    {
+        if (is_dir($dirname)) {
+            $dir_handle = opendir($dirname);
+        }
+
+        if (!$dir_handle) {
+            return false;
+        }
+
+        while ($file = readdir($dir_handle)) {
+            if ($file != "." && $file != "..") {
+                if (!is_dir($dirname . "/" . $file)) {
+                    unlink($dirname . "/" . $file);
+                } else {
+                    delete_directory($dirname . '/' . $file);
+                }
+            }
+        }
+        closedir($dir_handle);
+        rmdir($dirname);
+        return true;
+    }
 }

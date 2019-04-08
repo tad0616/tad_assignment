@@ -1,22 +1,22 @@
 <?php
-/*-----------¤Ş¤JÀÉ®×°Ï--------------*/
-$xoopsOption['template_main'] = "tad_assignment_adm_add.html";
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
+$xoopsOption['template_main'] = "tad_assignment_adm_add.tpl";
 include_once "header.php";
 include_once "../function.php";
-/*-----------function°Ï--------------*/
-//tad_assignment½s¿èªí³æ
+/*-----------functionå€--------------*/
+//tad_assignmentç·¨è¼¯è¡¨å–®
 function tad_assignment_form($assn = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    //§ì¨ú¹w³]­È
+    //æŠ“å–é è¨­å€¼
     if (!empty($assn)) {
         $DBV = get_tad_assignment($assn);
     } else {
         $DBV = array();
     }
 
-    //¹w³]­È³]©w
+    //é è¨­å€¼è¨­å®š
 
     $assn       = (!isset($DBV['assn'])) ? "" : $DBV['assn'];
     $title      = (!isset($DBV['title'])) ? "" : $DBV['title'];
@@ -44,7 +44,7 @@ function tad_assignment_form($assn = "")
 
 }
 
-//·s¼W¸ê®Æ¨ìtad_assignment¤¤
+//æ–°å¢è³‡æ–™åˆ°tad_assignmentä¸­
 function insert_tad_assignment()
 {
     global $xoopsDB, $xoopsUser;
@@ -52,13 +52,13 @@ function insert_tad_assignment()
     $start_date = strtotime($_POST['start_date']);
     $end_date   = strtotime($_POST['end_date']);
     $sql        = "insert into " . $xoopsDB->prefix("tad_assignment") . " (`title`,`passwd`,`start_date`,`end_date`,`note`,`uid`,`show`) values('{$_POST['title']}','{$_POST['passwd']}','{$start_date}','{$end_date}','{$_POST['note']}','{$uid}','{$_POST['show']}')";
-    $xoopsDB->query($sql) or web_error($sql);
-    //¨ú±o³Ì«á·s¼W¸ê®Æªº¬y¤ô½s¸¹
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    //å–å¾—æœ€å¾Œæ–°å¢è³‡æ–™çš„æµæ°´ç·¨è™Ÿ
     $assn = $xoopsDB->getInsertId();
     return $assn;
 }
 
-//§ó·stad_assignment¬Y¤@µ§¸ê®Æ
+//æ›´æ–°tad_assignmentæŸä¸€ç­†è³‡æ–™
 function update_tad_assignment($assn = "")
 {
     global $xoopsDB, $xoopsUser;
@@ -67,48 +67,46 @@ function update_tad_assignment($assn = "")
     $end_date   = strtotime($_POST['end_date']);
 
     $sql = "update " . $xoopsDB->prefix("tad_assignment") . " set  `title` = '{$_POST['title']}', `passwd` = '{$_POST['passwd']}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `note` = '{$_POST['note']}', `uid` = '{$uid}', `show` = '{$_POST['show']}' where assn='$assn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return $assn;
 }
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op   = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
+
 switch ($op) {
 
-    //·s¼W¸ê®Æ
+    //æ–°å¢è³‡æ–™
     case "insert_tad_assignment":
         insert_tad_assignment();
         header("location: index.php");
-        exit;
         break;
 
-    //¿é¤Jªí®æ
+    //è¼¸å…¥è¡¨æ ¼
     case "tad_assignment_form";
         tad_assignment_form($assn);
         break;
 
-    //§R°£¸ê®Æ
+    //åˆªé™¤è³‡æ–™
     case "delete_tad_assignment";
         delete_tad_assignment($assn);
         header("location: index.php");
-        exit;
         break;
 
-    //§ó·s¸ê®Æ
+    //æ›´æ–°è³‡æ–™
     case "update_tad_assignment";
         update_tad_assignment($assn);
         header("location: index.php");
-        exit;
         break;
 
-    //¹w³]°Ê§@
+    //é è¨­å‹•ä½œ
     default:
         tad_assignment_form($assn);
         break;
 
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæœå€--------------*/
 include_once 'footer.php';

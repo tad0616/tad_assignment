@@ -44,3 +44,4 @@ define('_MD_TADASSIGN_SCORE', 'Score');
 define('_MD_TADASSIGN_COMMENT', 'Comment');
 define('_TAD_ASSIGNMENT_WRONG_PASSWD', 'Wrong password, please re-upload and enter the correct password.');
 define('_MD_TADASSIGN_EMPTY', 'Currently no upload topic.');
+define('_MD_TADASSIGN_NEED_FILE', 'No files were selected, so they can not be added.');

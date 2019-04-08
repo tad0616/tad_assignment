@@ -1,4 +1,26 @@
-Tad Assignment 2.4 (2016-05-25 release)
+Tad Assignment 2.5.1 (released from 2019-01-01)
+==========================================================
+1. Support BootStrap4
+2. Remove the Big5 language
+3. Support PHP 7.3
+4. Support MySQL database strict mode
+
+
+Tad Assignment 2.5 (2017-06-16 released)
+=================================================
+1. Complete accessibility 2.0 A level detection
+2. Present the order change from new to old
+
+
+Tad Assignment 2.4.1  (2017-01-08 released)
+=================================================
+1.Change the col-md of boootstrap to col-sm
+2.The compatibility of XOOPS 2.5.8
+3.Add a description of the file
+4.Unselected files are not published
+
+
+Tad Assignment 2.4 (2016-05-25 released)
 =================================================
 1.Thank Michael Beck in English language
 2.Modify the program so that it conforms with PSR2
@@ -6,39 +28,39 @@ Tad Assignment 2.4 (2016-05-25 release)
 4.Change templates from BootStrap2 to BootStrap3
 
 
-Tad Assignment 2.31 (2014-09-25 release)
+Tad Assignment 2.31 (2014-09-25 released)
 =================================================
 1. Modify the program so that it conforms with WCAG
 2. Fixed in MySQL strict mode can not issue new event
 
 
-Tad Assignment 2.3 (release 2014-06-13)
+Tad Assignment 2.3 (released 2014-06-13)
 =================================================
  1. Amend the job description does not show the bug
  2. Fixed uid field is mediumint (8) Format
 
 
-Tad Assignment 2.2 (release 2014-04-09)
+Tad Assignment 2.2 (released 2014-04-09)
 =================================================
  1. streamline unnecessary functions
  2. trimming forum
 
 
-Tad Assignment 2.1 (release 2013-11-20)
+Tad Assignment 2.1 (released 2013-11-20)
 =================================================
  1. Fixed the main menu of sub-options presented no language problems correctly
  2. Fixed works open display, visitors can not see the general bug
  3. fixed part of the language content
 
 
-Tad Assignment 2.0 (release 2013-11-12)
+Tad Assignment 2.0 (released 2013-11-12)
 =================================================
  1. The comprehensive rewrite of XOOPS 2.5 architecture, set into BootStrap interface.
  2. The words of support file extension.
  3. Optimize the user interface.
 
 
-Tad Assignment 1.0 (release 2009-02-13)
+Tad Assignment 1.0 (released 2009-02-13)
 =================================================
  1. Easy to use -
  2. Can support more than one teacher, opened uploaded topic (teacher need to have management rights)

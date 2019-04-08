@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_assignment_show.html");
+$xoopsOption['template_main'] = "tad_assignment_show.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 
 /*-----------function區--------------*/
@@ -13,10 +13,10 @@ function list_tad_assignment_menu()
     // $where=($isAdmin)?"":"where `show`='1'";
 
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " $where order by start_date desc";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i       = 0;
-    $alldata = "";
+    $alldata = array();
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
@@ -44,11 +44,11 @@ function list_tad_assignment_file($assn = "")
         $xoopsTpl->assign($k, $v);
     }
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where assn='{$assn}' order by `up_time`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where assn='{$assn}' order by `up_time` desc";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i    = 0;
-    $data = "";
+    $data = array();
     while ($all = $xoopsDB->fetchArray($result)) {
 
         foreach ($all as $k => $v) {
@@ -95,7 +95,7 @@ function delete_tad_assignment_file($asfsn = "")
     global $xoopsDB;
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='{$asfsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while ($all = $xoopsDB->fetchArray($result)) {
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -110,7 +110,7 @@ function delete_tad_assignment_file($asfsn = "")
     unlink(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/{$asfsn}.{$sub_name}");
 
     $sql = "delete from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='$asfsn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/

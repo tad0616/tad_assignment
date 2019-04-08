@@ -9,7 +9,7 @@ CREATE TABLE `tad_assignment` (
   `uid` mediumint(8) unsigned NOT NULL default 0,
   `show` enum('1','0') NOT NULL default '1',
   PRIMARY KEY  (`assn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -28,13 +28,13 @@ CREATE TABLE `tad_assignment_file` (
   `comment` text NOT NULL,
   `up_time` datetime,
   PRIMARY KEY  (`asfsn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `tad_assignment_types` (
 	`type` VARCHAR( 255 ) NOT NULL default '' ,
 	PRIMARY KEY ( `type` )
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `tad_assignment_types` (`type`) VALUES
 ('application/rar'),

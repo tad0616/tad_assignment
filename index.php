@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_assignment_index.html");
+$xoopsOption['template_main'] = "tad_assignment_index.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -10,10 +10,10 @@ function list_tad_assignment_menu()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     $now    = xoops_getUserTimestamp(time());
-    $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " where start_date < '$now' and end_date > '$now'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " where start_date < '$now' and end_date > '$now' order by start_date desc";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
-    $data   = "";
+    $data   = array();
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
@@ -50,16 +50,26 @@ function tad_assignment_file_form($assn = "")
 function insert_tad_assignment_file()
 {
     global $xoopsDB;
+    if (empty($_FILES['file']['name'])) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADASSIGN_NEED_FILE);
+    }
+
     $assignment = get_tad_assignment($_POST['assn']);
 
     if ($_POST['passwd'] != $assignment['passwd']) {
         redirect_header($_SERVER['PHP_SELF'], 3, _TAD_ASSIGNMENT_WRONG_PASSWD);
-        exit;
     }
     $now = date("Y-m-d H:i:s");
 
+    $myts               = MyTextSanitizer::getInstance();
+    $_POST['show_name'] = $myts->addSlashes($_POST['show_name']);
+    $_POST['desc']      = $myts->addSlashes($_POST['desc']);
+    $_POST['author']    = $myts->addSlashes($_POST['author']);
+    $_POST['email']     = $myts->addSlashes($_POST['email']);
+    $_POST['assn']      = (int)$_POST['assn'];
+
     $sql = "insert into " . $xoopsDB->prefix("tad_assignment_file") . " (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $asfsn = $xoopsDB->getInsertId();
 
@@ -88,10 +98,10 @@ function upload_file($asfsn = "", $assn = "")
         if ($flv_handle->processed) {
             $flv_handle->clean();
             $sql = "update " . $xoopsDB->prefix("tad_assignment_file") . " set file_name='{$_FILES['file']['name']}',file_size='{$_FILES['file']['size']}' ,file_type='{$_FILES['file']['type']}',`up_time`='$now'  where asfsn='$asfsn'";
-            $xoopsDB->queryF($sql) or web_error($sql);
+            $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         } else {
             $sql = "delete from " . $xoopsDB->prefix("tad_assignment_file") . " where asfsn='{$asfsn}'";
-            $xoopsDB->query($sql) or web_error($sql);
+            $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             redirect_header($_SERVER['PHP_SELF'], 3, "Error:" . $flv_handle->error);
         }
     }

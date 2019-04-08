@@ -1,14 +1,14 @@
 <?php
-//°Ï¶ô¥D¨ç¦¡ (¦C¥X¥Ø«e¶}©ñ¤W¶Çªº§@·~¶µ¥Ø)
+//å€å¡Šä¸»å‡½å¼ (åˆ—å‡ºç›®å‰é–‹æ”¾ä¸Šå‚³çš„ä½œæ¥­é …ç›®)
 function tad_new_assignment($options)
 {
     global $xoopsDB, $xoopsModule;
     $now    = xoops_getUserTimestamp(time());
     $sql    = "select assn,title,uid,start_date from " . $xoopsDB->prefix("tad_assignment") . " where start_date < '$now' and end_date > '$now'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i     = 0;
-    $block = "";
+    $block = array();
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
