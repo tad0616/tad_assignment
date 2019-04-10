@@ -10,7 +10,7 @@ function xoops_module_uninstall_tad_assignment(&$module)
     return true;
 }
 
-function delete_directory($dirname)
+function tad_assignment_delete_directory($dirname)
 {
     if (is_dir($dirname)) {
         $dir_handle = opendir($dirname);
@@ -25,7 +25,7 @@ function delete_directory($dirname)
             if (!is_dir($dirname . "/" . $file)) {
                 unlink($dirname . "/" . $file);
             } else {
-                delete_directory($dirname . '/' . $file);
+                tad_assignment_delete_directory($dirname . '/' . $file);
             }
 
         }
@@ -35,8 +35,8 @@ function delete_directory($dirname)
     return true;
 }
 
-//«þ¨©¥Ø¿ý
-function full_copy($source = "", $target = "")
+//?????Ø¿?
+function tad_assignment_full_copy($source = "", $target = "")
 {
     if (is_dir($source)) {
         @mkdir($target);
@@ -48,7 +48,7 @@ function full_copy($source = "", $target = "")
 
             $Entry = $source . '/' . $entry;
             if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
+                tad_assignment_full_copy($Entry, $target . '/' . $entry);
                 continue;
             }
             copy($Entry, $target . '/' . $entry);

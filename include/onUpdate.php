@@ -18,7 +18,7 @@ function xoops_module_update_tad_assignment(&$module, $old_version)
 
     $old_DateTime = XOOPS_ROOT_PATH . "/modules/tad_assignment/class/DateTime";
     if (is_dir($old_DateTime)) {
-        delete_directory($old_DateTime);
+        tad_assignment_delete_directory($old_DateTime);
     }
     return true;
 }
@@ -197,8 +197,8 @@ function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $widt
 
 
 //建立目錄
-if (!function_exists('mk_dir')) {
-    function mk_dir($dir = "")
+if (!function_exists('tad_assignment_mk_dir')) {
+    function tad_assignment_mk_dir($dir = "")
     {
         //若無目錄名稱秀出警告訊息
         if (empty($dir)) {
@@ -215,8 +215,8 @@ if (!function_exists('mk_dir')) {
 }
 
 //拷貝目錄
-if (!function_exists('full_copy')) {
-    function full_copy($source = "", $target = "")
+if (!function_exists('tad_assignment_full_copy')) {
+    function tad_assignment_full_copy($source = "", $target = "")
     {
         if (is_dir($source)) {
             @mkdir($target);
@@ -228,7 +228,7 @@ if (!function_exists('full_copy')) {
 
                 $Entry = $source . '/' . $entry;
                 if (is_dir($Entry)) {
-                    full_copy($Entry, $target . '/' . $entry);
+                    tad_assignment_full_copy($Entry, $target . '/' . $entry);
                     continue;
                 }
                 copy($Entry, $target . '/' . $entry);
@@ -254,8 +254,8 @@ if (!function_exists('rename_win')) {
     }
 }
 
-if (!function_exists('delete_directory')) {
-    function delete_directory($dirname)
+if (!function_exists('tad_assignment_delete_directory')) {
+    function tad_assignment_delete_directory($dirname)
     {
         if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
@@ -270,7 +270,7 @@ if (!function_exists('delete_directory')) {
                 if (!is_dir($dirname . "/" . $file)) {
                     unlink($dirname . "/" . $file);
                 } else {
-                    delete_directory($dirname . '/' . $file);
+                    tad_assignment_delete_directory($dirname . '/' . $file);
                 }
             }
         }

@@ -2,13 +2,13 @@
 function xoops_module_install_tad_assignment(&$module)
 {
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_assignment");
+    tad_assignment_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_assignment");
 
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function tad_assignment_mk_dir($dir = "")
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
