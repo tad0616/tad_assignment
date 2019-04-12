@@ -92,7 +92,7 @@ function upload_file($asfsn = "", $assn = "")
         $flv_handle->mime_check     = false;
 
         $flv_handle->auto_create_dir    = true;
-        $flv_handle->file_new_name_body = "{$asfsn}";
+        $flv_handle->file_new_name_body = (string)($asfsn);
         $flv_handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
         $now = date("Y-m-d H:i:s");
         if ($flv_handle->processed) {
