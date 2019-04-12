@@ -8,7 +8,7 @@ function tad_new_assignment($options)
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i     = 0;
-    $block = array();
+    $block = [];
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {

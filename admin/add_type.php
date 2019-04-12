@@ -11,7 +11,7 @@ function add_type_form()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
 
-    $all    = array();
+    $all    = [];
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;

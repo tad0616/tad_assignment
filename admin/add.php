@@ -13,7 +13,7 @@ function tad_assignment_form($assn = "")
     if (!empty($assn)) {
         $DBV = get_tad_assignment($assn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定

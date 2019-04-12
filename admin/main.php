@@ -22,7 +22,7 @@ function list_tad_assignment($show_function = 1)
     $total   = $PageBar['total'];
 
     $result   = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $all_data = array();
+    $all_data = [];
     $i        = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         foreach ($all as $k => $v) {
