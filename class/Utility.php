@@ -148,7 +148,7 @@ PRIMARY KEY ( `type` )
   WHERE table_name = '" . $xoopsDB->prefix('tad_assignment') . "' AND COLUMN_NAME = 'uid'";
         $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
-        if ('smallint' == $type) {
+        if ('smallint' === $type) {
             return true;
         }
 
@@ -179,13 +179,13 @@ PRIMARY KEY ( `type` )
 
         // Load
         $thumb = imagecreatetruecolor($newwidth, $newheight);
-        if ('image/jpeg' == $type or 'image/jpg' == $type or 'image/pjpg' == $type or 'image/pjpeg' == $type) {
+        if ('image/jpeg' === $type or 'image/jpg' === $type or 'image/pjpg' === $type or 'image/pjpeg' === $type) {
             $source = imagecreatefromjpeg($filename);
             $type = 'image/jpeg';
-        } elseif ('image/png' == $type) {
+        } elseif ('image/png' === $type) {
             $source = imagecreatefrompng($filename);
             $type = 'image/png';
-        } elseif ('image/gif' == $type) {
+        } elseif ('image/gif' === $type) {
             $source = imagecreatefromgif($filename);
             $type = 'image/gif';
         }
@@ -229,7 +229,7 @@ PRIMARY KEY ( `type` )
             }
             $d = dir($source);
             while (false !== ($entry = $d->read())) {
-                if ('.' == $entry || '..' == $entry) {
+                if ('.' === $entry || '..' === $entry) {
                     continue;
                 }
 
@@ -272,7 +272,7 @@ PRIMARY KEY ( `type` )
         }
 
         while ($file = readdir($dir_handle)) {
-            if ('.' != $file && '..' != $file) {
+            if ('.' !== $file && '..' !== $file) {
                 if (!is_dir($dirname . '/' . $file)) {
                     unlink($dirname . '/' . $file);
                 } else {
