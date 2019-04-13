@@ -1,20 +1,19 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_assignment_adm_add_type.tpl";
-include_once "header.php";
-include_once "../function.php";
+$xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
+include_once 'header.php';
+include_once '../function.php';
 
 /*-----------function區--------------*/
 
-//
 function add_type_form()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
 
-    $all    = [];
-    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
+    $all = [];
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $i      = 0;
+    $i = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[$i]['type'] = ($_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
         $i++;
@@ -22,21 +21,19 @@ function add_type_form()
     $xoopsTpl->assign('all', $all);
 }
 
-//
 function add_type()
 {
     global $xoopsDB;
-    $sql = "replace into " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) values('{$_FILES['file']['type']}')";
+    $sql = 'replace into ' . $xoopsDB->prefix('tad_assignment_types') . " (`type`) values('{$_FILES['file']['type']}')";
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     mk_type();
 }
 
-//
-function del_type($type = "")
+function del_type($type = '')
 {
     global $xoopsDB;
-    $sql = "delete from " . $xoopsDB->prefix("tad_assignment_types") . " where type='{$type}'";
+    $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment_types') . " where type='{$type}'";
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     mk_type();
@@ -45,7 +42,7 @@ function del_type($type = "")
 function mk_type()
 {
     global $xoopsDB;
-    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_assignment_types") . " ORDER BY `type`";
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";
@@ -53,36 +50,31 @@ function mk_type()
 
     $txt = "<?php\n\$all_types=array(" . implode(",\n", $all) . ");\n?>";
 
-    $fp = fopen(XOOPS_ROOT_PATH . "/uploads/tad_assignment/allow_types.php", 'w');
+    $fp = fopen(XOOPS_ROOT_PATH . '/uploads/tad_assignment/allow_types.php', 'wb');
     fwrite($fp, $txt);
     fclose($fp);
 }
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 $type = system_CleanVars($_REQUEST, 'type', '', 'string');
 
 switch ($op) {
-
-    //
-    case "add_type":
+    case 'add_type':
         add_type();
         header("location: {$_SERVER['PHP_SELF']}?t={$_FILES['file']['type']}");
         exit;
         break;
-
-    case "del_type":
+    case 'del_type':
         del_type($type);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
-
     //預設動作
     default:
         add_type_form();
         break;
-
 }
 
 /*-----------秀出結果區--------------*/
