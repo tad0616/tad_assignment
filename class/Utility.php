@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tad_assignment;
+<?php
+
+namespace XoopsModules\Tad_assignment;
 
 /*
  Utility Class Definition
@@ -27,7 +29,7 @@ class Utility
     public static function chk_chk1()
     {
         global $xoopsDB;
-        $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_assignment_types");
+        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_assignment_types');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -39,13 +41,13 @@ class Utility
     public static function go_update1()
     {
         global $xoopsDB;
-        $sql = "CREATE TABLE " . $xoopsDB->prefix("tad_assignment_types") . " (
+        $sql = 'CREATE TABLE ' . $xoopsDB->prefix('tad_assignment_types') . ' (
 `type` VARCHAR( 255 ) NOT NULL ,
 PRIMARY KEY ( `type` )
-);";
+);';
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-        $sql = "INSERT INTO " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) VALUES
+        $sql = 'INSERT INTO ' . $xoopsDB->prefix('tad_assignment_types') . " (`type`) VALUES
 ('application/rar'),
 ('application/x-rar-compressed'),
 ('application/arj'),
@@ -111,6 +113,7 @@ PRIMARY KEY ( `type` )
 ('application/vnd.oasis.opendocument.spreadsheet'),
 ('application/x-vnd.oasis.opendocument.spreadsheet')";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+
         return true;
     }
 
@@ -118,7 +121,7 @@ PRIMARY KEY ( `type` )
     public static function chk_chk2()
     {
         global $xoopsDB;
-        $sql    = "SELECT count(`up_time`) FROM " . $xoopsDB->prefix("tad_assignment_file");
+        $sql = 'SELECT count(`up_time`) FROM ' . $xoopsDB->prefix('tad_assignment_file');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -131,7 +134,7 @@ PRIMARY KEY ( `type` )
     public static function go_update2()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_assignment_file") . " ADD `up_time` DATETIME";
+        $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_assignment_file') . ' ADD `up_time` DATETIME';
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
         return true;
@@ -141,11 +144,11 @@ PRIMARY KEY ( `type` )
     public static function chk_uid()
     {
         global $xoopsDB;
-        $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE table_name = '" . $xoopsDB->prefix("tad_assignment") . "' AND COLUMN_NAME = 'uid'";
+        $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE table_name = '" . $xoopsDB->prefix('tad_assignment') . "' AND COLUMN_NAME = 'uid'";
         $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
-        if ($type == 'smallint') {
+        if ('smallint' === $type) {
             return true;
         }
 
@@ -156,13 +159,14 @@ PRIMARY KEY ( `type` )
     public static function go_update_uid()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_assignment") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
+        $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_assignment') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+
         return true;
     }
 
     //做縮圖
-    public static function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
+    public static function thumbnail($filename = '', $thumb_name = '', $type = 'image/jpeg', $width = '120')
     {
         ini_set('memory_limit', '50M');
         // Get new sizes
@@ -170,26 +174,26 @@ PRIMARY KEY ( `type` )
 
         $percent = ($old_width > $old_height) ? round($width / $old_width, 2) : round($width / $old_height, 2);
 
-        $newwidth  = ($old_width > $old_height) ? $width : $old_width * $percent;
+        $newwidth = ($old_width > $old_height) ? $width : $old_width * $percent;
         $newheight = ($old_width > $old_height) ? $old_height * $percent : $width;
 
         // Load
         $thumb = imagecreatetruecolor($newwidth, $newheight);
-        if ($type == "image/jpeg" or $type == "image/jpg" or $type == "image/pjpg" or $type == "image/pjpeg") {
+        if ('image/jpeg' === $type or 'image/jpg' === $type or 'image/pjpg' === $type or 'image/pjpeg' === $type) {
             $source = imagecreatefromjpeg($filename);
-            $type   = "image/jpeg";
-        } elseif ($type == "image/png") {
+            $type = 'image/jpeg';
+        } elseif ('image/png' === $type) {
             $source = imagecreatefrompng($filename);
-            $type   = "image/png";
-        } elseif ($type == "image/gif") {
+            $type = 'image/png';
+        } elseif ('image/gif' === $type) {
             $source = imagecreatefromgif($filename);
-            $type   = "image/gif";
+            $type = 'image/gif';
         }
 
         // Resize
         imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
 
-        header("Content-type: image/png");
+        header('Content-type: image/png');
         imagepng($thumb, $thumb_name);
 
         return;
@@ -198,7 +202,7 @@ PRIMARY KEY ( `type` )
 
     //建立目錄
 
-    public static function mk_dir($dir = "")
+    public static function mk_dir($dir = '')
     {
         //若無目錄名稱秀出警告訊息
         if (empty($dir)) {
@@ -209,19 +213,23 @@ PRIMARY KEY ( `type` )
         if (!is_dir($dir)) {
             umask(000);
             //若建立失敗秀出警告訊息
-            mkdir($dir, 0777);
+            if (!mkdir($dir, 0777) && !is_dir($dir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+            }
         }
     }
 
     //拷貝目錄
 
-    public static function full_copy($source = "", $target = "")
+    public static function full_copy($source = '', $target = '')
     {
         if (is_dir($source)) {
-            @mkdir($target);
+            if (!mkdir($target) && !is_dir($target)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $target));
+            }
             $d = dir($source);
             while (false !== ($entry = $d->read())) {
-                if ($entry == '.' || $entry == '..') {
+                if ('.' === $entry || '..' === $entry) {
                     continue;
                 }
 
@@ -243,10 +251,13 @@ PRIMARY KEY ( `type` )
         if (!rename($oldfile, $newfile)) {
             if (copy($oldfile, $newfile)) {
                 unlink($oldfile);
+
                 return true;
             }
+
             return false;
         }
+
         return true;
     }
 
@@ -261,9 +272,9 @@ PRIMARY KEY ( `type` )
         }
 
         while ($file = readdir($dir_handle)) {
-            if ($file != "." && $file != "..") {
-                if (!is_dir($dirname . "/" . $file)) {
-                    unlink($dirname . "/" . $file);
+            if ('.' !== $file && '..' !== $file) {
+                if (!is_dir($dirname . '/' . $file)) {
+                    unlink($dirname . '/' . $file);
                 } else {
                     static::delete_directory($dirname . '/' . $file);
                 }
@@ -271,7 +282,7 @@ PRIMARY KEY ( `type` )
         }
         closedir($dir_handle);
         rmdir($dirname);
+
         return true;
     }
-
 }
