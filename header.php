@@ -1,8 +1,8 @@
 <?php
-include_once '../../mainfile.php';
-include_once 'function.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once __DIR__ . '/function.php';
 
-//§PÂ_¬O§_¹ï¸Ó¼Ò²Õ¦³ºŞ²zÅv­­
+//åˆ¤æ–·æ˜¯å¦å°è©²æ¨¡çµ„æœ‰ç®¡ç†æ¬Šé™
 $isAdmin = false;
 if ($xoopsUser) {
     $module_id = $xoopsModule->getVar('mid');

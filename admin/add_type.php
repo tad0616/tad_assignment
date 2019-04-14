@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_assignment_adm_add_type.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 
@@ -14,9 +14,11 @@ function add_type_form()
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
-    while (list($type) = $xoopsDB->fetchRow($result)) {
-        $all[$i]['type'] = ($_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
-        $i++;
+    while (false !== (list($type) = $xoopsDB->fetchRow($result))) {
+
+            $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
+            $i++;
+
     }
     $xoopsTpl->assign('all', $all);
 }
@@ -44,7 +46,7 @@ function mk_type()
     global $xoopsDB;
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($type) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($type) = $xoopsDB->fetchRow($result))) {
         $all[] = "\"$type\"";
     }
 
@@ -55,7 +57,7 @@ function mk_type()
     fclose($fp);
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 $type = system_CleanVars($_REQUEST, 'type', '', 'string');
@@ -78,4 +80,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

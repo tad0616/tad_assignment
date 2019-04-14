@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
 define('_MI_TADASSIGN_NAME', '作業上傳展示');
 define('_MI_TADASSIGN_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MI_TADASSIGN_CREDITS', 'Michael Beck');

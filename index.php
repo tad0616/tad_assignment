@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once 'header.php';
-$xoopsOption['template_main'] = 'tad_assignment_index.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_assignment_index.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 //列出所有tad_assignment資料
@@ -14,7 +14,7 @@ function list_tad_assignment_menu()
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $data = [];
-    while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result))) {
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
             $uid_name = XoopsUser::getUnameFromId($uid, 0);
@@ -82,7 +82,7 @@ function insert_tad_assignment_file()
 function upload_file($asfsn = '', $assn = '')
 {
     global $xoopsDB;
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
     set_time_limit(0);
     ini_set('memory_limit', '150M');
     $flv_handle = new upload($_FILES['file'], 'zh_TW');
@@ -109,7 +109,7 @@ function upload_file($asfsn = '', $assn = '')
 
 /*-----------執行動作判斷區----------*/
 
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 
@@ -134,4 +134,4 @@ switch ($op) {
 $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

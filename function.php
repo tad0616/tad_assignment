@@ -3,7 +3,7 @@
 if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
     redirect_header('http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50', 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
 define('_TAD_ASSIGNMENT_UPLOAD_DIR', XOOPS_ROOT_PATH . '/uploads/tad_assignment/');
 define('_TAD_ASSIGNMENT_UPLOAD_URL', XOOPS_URL . '/uploads/tad_assignment/');

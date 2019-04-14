@@ -16,19 +16,22 @@
  * @author       Tad
  * @version      $Id $
  **/
-require_once '../../../include/cp_header.php';
-include 'header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require __DIR__ . '/header.php';
 
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/admin.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/admin.php';
 
-$index_admin = new ModuleAdmin();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-$index_admin->addConfigLabel(_AM_XDIR_CONFIG_CHECK);
-$index_admin->addLineConfigLabel(_AM_XDIR_CONFIG_PHP, $xoopsModule->getInfo('min_php'), 'php');
-$index_admin->addLineConfigLabel(_AM_XDIR_CONFIG_XOOPS, $xoopsModule->getInfo('min_xoops'), 'xoops');
+//$adminObject->addConfigLabel(_AM_XDIR_CONFIG_CHECK);
+//$adminObject->addLineConfigLabel(_AM_XDIR_CONFIG_PHP, $xoopsModule->getInfo('min_php'), 'php');
+//$adminObject->addLineConfigLabel(_AM_XDIR_CONFIG_XOOPS, $xoopsModule->getInfo('min_xoops'), 'xoops');
 
-echo $index_admin->addNavigation('index.php');
-echo $index_admin->renderIndex();
+//$adminObject->addConfigBoxLine(_AM_XDIR_CONFIG_PHP, $xoopsModule->getInfo('min_php'), 'php');
+//$adminObject->addConfigBoxLine(_AM_XDIR_CONFIG_XOOPS, $xoopsModule->getInfo('min_xoops'), 'xoops');
 
-include 'footer.php';
+$adminObject->displayNavigation('index.php');
+$adminObject->displayIndex();
+
+require __DIR__ . '/footer.php';
 xoops_cp_footer();
