@@ -30,7 +30,7 @@ $adminObject = \Xmf\Module\Admin::getInstance();
 //$adminObject->addConfigBoxLine(_AM_XDIR_CONFIG_PHP, $xoopsModule->getInfo('min_php'), 'php');
 //$adminObject->addConfigBoxLine(_AM_XDIR_CONFIG_XOOPS, $xoopsModule->getInfo('min_xoops'), 'xoops');
 
-$adminObject->displayNavigation('index.php');
+$adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
 
 require __DIR__ . '/footer.php';

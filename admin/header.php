@@ -23,9 +23,7 @@ require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 //
 //load_functions('admin');
 
-if (!@require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/main.php') {
-    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/main.php';
-}
+xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
     require_once XOOPS_ROOT_PATH . '/class/template.php';
     $xoopsTpl = new XoopsTpl();
