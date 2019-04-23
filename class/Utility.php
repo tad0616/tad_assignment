@@ -1,6 +1,4 @@
-<?php
-
-namespace XoopsModules\Tad_assignment;
+<?php namespace XoopsModules\Tad_assignment;
 
 /*
  Utility Class Definition
