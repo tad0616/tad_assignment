@@ -1,8 +1,6 @@
 <?php
 
-use XoopsModules\Tad_assignment\Utility;
-
-include dirname(__DIR__) . '/preloads/autoloader.php';
+use XoopsModules\Tadtools\Utility;
 
 function xoops_module_install_tad_assignment(&$module)
 {

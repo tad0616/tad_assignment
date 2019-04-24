@@ -1,5 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
+use XoopsModules\Tadtools\Utility;
 $xoopsOption['template_main'] = 'tad_assignment_adm_main.tpl';
 include_once 'header.php';
 include_once '../function.php';
@@ -16,7 +17,7 @@ function list_tad_assignment($show_function = 1)
     $total = $xoopsDB->getRowsNum($result);
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 10, 10);
+    $PageBar = Utility::getPageBar($sql, 10, 10);
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
