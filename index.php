@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 include_once 'header.php';
 $xoopsOption['template_main'] = 'tad_assignment_index.tpl';
@@ -66,7 +68,7 @@ function insert_tad_assignment_file()
     $_POST['desc'] = $myts->addSlashes($_POST['desc']);
     $_POST['author'] = $myts->addSlashes($_POST['author']);
     $_POST['email'] = $myts->addSlashes($_POST['email']);
-    $_POST['assn'] = (int)$_POST['assn'];
+    $_POST['assn'] = (int) $_POST['assn'];
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_assignment_file') . " (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
     $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
@@ -92,7 +94,7 @@ function upload_file($asfsn = '', $assn = '')
         $flv_handle->mime_check = false;
 
         $flv_handle->auto_create_dir = true;
-        $flv_handle->file_new_name_body = (string)($asfsn);
+        $flv_handle->file_new_name_body = (string) ($asfsn);
         $flv_handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
         $now = date('Y-m-d H:i:s');
         if ($flv_handle->processed) {
@@ -131,7 +133,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
 include_once XOOPS_ROOT_PATH . '/footer.php';
