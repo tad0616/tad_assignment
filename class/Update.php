@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
+
 namespace XoopsModules\Tad_assignment;
 
 /*
@@ -45,7 +47,7 @@ class Update
         `type` VARCHAR( 255 ) NOT NULL ,
         PRIMARY KEY ( `type` )
         );';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $sql = 'INSERT INTO ' . $xoopsDB->prefix('tad_assignment_types') . " (`type`) VALUES
         ('application/rar'),
@@ -112,7 +114,7 @@ class Update
         ('text/xml'),
         ('application/vnd.oasis.opendocument.spreadsheet'),
         ('application/x-vnd.oasis.opendocument.spreadsheet')";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -135,7 +137,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_assignment_file') . ' ADD `up_time` DATETIME';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -160,7 +162,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_assignment') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }

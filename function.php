@@ -1,9 +1,5 @@
 <?php
-//引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
-    redirect_header('http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50', 3, _TAD_NEED_TADTOOLS);
-}
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+use XoopsModules\Tadtools\Utility;
 
 define('_TAD_ASSIGNMENT_UPLOAD_DIR', XOOPS_ROOT_PATH . '/uploads/tad_assignment/');
 define('_TAD_ASSIGNMENT_UPLOAD_URL', XOOPS_URL . '/uploads/tad_assignment/');
@@ -17,7 +13,7 @@ function get_tad_assignment($assn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment') . " where assn='$assn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
