@@ -1,10 +1,11 @@
 <?php
+use XoopsModules\Tadtools\FancyBox;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
-include_once 'header.php';
+require_once 'header.php';
 $xoopsOption['template_main'] = 'tad_assignment_show.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 //列出所有tad_assignment資料
@@ -73,20 +74,12 @@ function list_tad_assignment_file($assn = '')
     $xoopsTpl->assign('assn', $assn);
     $xoopsTpl->assign('file_data', $data);
     $xoopsTpl->assign('now_op', 'list_tad_assignment_file');
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php';
-    $fancybox = new fancybox(".assignment_fancy_{$assn}");
-    $fancybox_code = $fancybox->render(false);
-    $xoopsTpl->assign('fancybox_code', $fancybox_code);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_func', "show.php?op=delete_tad_assignment_file&assn={$assn}&asfsn=", 'asfsn');
+    $FancyBox = new FancyBox(".assignment_fancy_{$assn}");
+    $FancyBox->render(false);
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_func', "show.php?op=delete_tad_assignment_file&assn={$assn}&asfsn=", 'asfsn');
 }
 
 //刪除tad_assignment_file某筆資料資料
@@ -114,7 +107,7 @@ function delete_tad_assignment_file($asfsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 $asfsn = system_CleanVars($_REQUEST, 'asfsn', 0, 'int');
@@ -138,4 +131,4 @@ switch ($op) {
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';
