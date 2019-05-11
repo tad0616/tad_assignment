@@ -9,10 +9,10 @@ function tad_new_assignment($options)
 
     $i = 0;
     $block = [];
-    while (false !== (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result))) {
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
-            $uid_name = XoopsUser::getUnameFromId($uid, 0);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
         $block[$i]['assn'] = $assn;

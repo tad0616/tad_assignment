@@ -29,9 +29,9 @@ function list_tad_assignment($show_function = 1)
             $$k = $v;
         }
 
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
-            $uid_name = XoopsUser::getUnameFromId($uid, 0);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
         $start_date = date('Y-m-d H:i', xoops_getUserTimestamp($start_date));

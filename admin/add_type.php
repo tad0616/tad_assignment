@@ -14,7 +14,7 @@ function add_type_form()
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
-    while (false !== (list($type) = $xoopsDB->fetchRow($result))) {
+    while (list($type) = $xoopsDB->fetchRow($result)) {
 
             $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
             $i++;
@@ -46,7 +46,7 @@ function mk_type()
     global $xoopsDB;
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($type) = $xoopsDB->fetchRow($result))) {
+    while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";
     }
 

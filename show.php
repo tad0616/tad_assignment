@@ -17,10 +17,10 @@ function list_tad_assignment_menu()
 
     $i = 0;
     $alldata = [];
-    while (false !== (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result))) {
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
-            $uid_name = XoopsUser::getUnameFromId($uid, 0);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
         $alldata[$i]['assn'] = $assn;
@@ -72,7 +72,7 @@ function list_tad_assignment_file($assn = '')
     $xoopsTpl->assign('file_data', $data);
     $xoopsTpl->assign('now_op', 'list_tad_assignment_file');
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php';
     $fancybox = new fancybox(".assignment_fancy_{$assn}");
@@ -80,7 +80,7 @@ function list_tad_assignment_file($assn = '')
     $xoopsTpl->assign('fancybox_code', $fancybox_code);
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
     $sweet_alert = new sweet_alert();

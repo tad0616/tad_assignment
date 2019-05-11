@@ -14,10 +14,10 @@ function list_tad_assignment_menu()
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $data = [];
-    while (false !== (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result))) {
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
-            $uid_name = XoopsUser::getUnameFromId($uid, 0);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
         $data[$i]['assn'] = $assn;
