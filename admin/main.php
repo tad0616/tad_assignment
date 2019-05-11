@@ -1,6 +1,8 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_assignment_adm_main.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_adm_main.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 /*-----------function區--------------*/
@@ -12,16 +14,16 @@ function list_tad_assignment($show_function = 1)
     $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment') . ' order by start_date desc';
 
     //PageBar(資料數, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $total = $xoopsDB->getRowsNum($result);
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 10, 10);
+    $PageBar = Utility::getPageBar($sql, 10, 10);
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $all_data = [];
     $i = 0;
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
@@ -56,7 +58,7 @@ function delete_tad_assignment($assn = '')
 {
     global $xoopsDB;
     $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment') . " where assn='$assn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/

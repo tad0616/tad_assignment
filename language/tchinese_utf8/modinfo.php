@@ -1,5 +1,6 @@
 <?php
 xoops_loadLanguage('modinfo_common', 'tadtools');
+
 define('_MI_TADASSIGN_NAME', '作業上傳展示');
 define('_MI_TADASSIGN_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MI_TADASSIGN_CREDITS', 'Michael Beck');

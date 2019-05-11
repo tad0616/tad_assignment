@@ -1,7 +1,10 @@
 <?php
+use XoopsModules\Tadtools\FancyBox;
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'tad_assignment_show.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_show.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
@@ -13,7 +16,7 @@ function list_tad_assignment_menu()
     // $where=($isAdmin)?"":"where `show`='1'";
 
     $sql = 'select assn,title,uid,start_date from ' . $xoopsDB->prefix('tad_assignment') . " $where order by start_date desc";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
     $alldata = [];
@@ -45,7 +48,7 @@ function list_tad_assignment_file($assn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment_file') . " where assn='{$assn}' order by `up_time` desc";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
     $data = [];
@@ -71,20 +74,12 @@ function list_tad_assignment_file($assn = '')
     $xoopsTpl->assign('assn', $assn);
     $xoopsTpl->assign('file_data', $data);
     $xoopsTpl->assign('now_op', 'list_tad_assignment_file');
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php';
-    $fancybox = new fancybox(".assignment_fancy_{$assn}");
-    $fancybox_code = $fancybox->render(false);
-    $xoopsTpl->assign('fancybox_code', $fancybox_code);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_func', "show.php?op=delete_tad_assignment_file&assn={$assn}&asfsn=", 'asfsn');
+    $FancyBox = new FancyBox(".assignment_fancy_{$assn}");
+    $FancyBox->render(false);
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_func', "show.php?op=delete_tad_assignment_file&assn={$assn}&asfsn=", 'asfsn');
 }
 
 //刪除tad_assignment_file某筆資料資料
@@ -93,7 +88,7 @@ function delete_tad_assignment_file($asfsn = '')
     global $xoopsDB;
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment_file') . " where asfsn='{$asfsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -108,7 +103,7 @@ function delete_tad_assignment_file($asfsn = '')
     unlink(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/{$asfsn}.{$sub_name}");
 
     $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment_file') . " where asfsn='$asfsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/
@@ -133,7 +128,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
 require_once XOOPS_ROOT_PATH . '/footer.php';

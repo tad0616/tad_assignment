@@ -1,4 +1,5 @@
 <?php
+xoops_loadLanguage('main', 'tadtools');
 define('_MD_SHOW', '上傳展示');
 
 //月曆用

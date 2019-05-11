@@ -1,6 +1,7 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_assignment_adm_add_type.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
@@ -12,12 +13,12 @@ function add_type_form()
 
     $all = [];
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
 
             $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
-            $i++;
+        $i++;
 
     }
     $xoopsTpl->assign('all', $all);
@@ -27,7 +28,7 @@ function add_type()
 {
     global $xoopsDB;
     $sql = 'replace into ' . $xoopsDB->prefix('tad_assignment_types') . " (`type`) values('{$_FILES['file']['type']}')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     mk_type();
 }
@@ -36,7 +37,7 @@ function del_type($type = '')
 {
     global $xoopsDB;
     $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment_types') . " where type='{$type}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     mk_type();
 }
@@ -45,7 +46,7 @@ function mk_type()
 {
     global $xoopsDB;
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";
     }
