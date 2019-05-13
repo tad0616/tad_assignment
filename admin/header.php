@@ -14,7 +14,9 @@
  * @author
  * @version      $Id $
  **/
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
+require  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 

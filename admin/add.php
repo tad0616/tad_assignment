@@ -2,8 +2,8 @@
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_assignment_adm_add.tpl';
-require_once 'header.php';
-require_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 /*-----------function區--------------*/
 //tad_assignment編輯表單
 function tad_assignment_form($assn = '')
@@ -105,4 +105,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-require_once 'footer.php';
+require_once __DIR__ . '/footer.php';

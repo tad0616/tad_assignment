@@ -2,8 +2,8 @@
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
-require_once 'header.php';
-require_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 
@@ -16,8 +16,10 @@ function add_type_form()
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
-        $all[$i]['type'] = ($_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
+
+            $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
         $i++;
+
     }
     $xoopsTpl->assign('all', $all);
 }
@@ -79,4 +81,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-require_once 'footer.php';
+require_once __DIR__ . '/footer.php';

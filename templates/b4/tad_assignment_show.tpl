@@ -25,7 +25,7 @@
   </div>
 <{/if}>
 
-  <link rel='stylesheet' type='text/css' href='<{$xoops_url}>/modules/tadtools/css/iconize.css' />
+  <link rel='stylesheet' type='text/css' href='<{$xoops_url}>/modules/tadtools/css/iconize.css'>
 
   <div class="row" style="margin-top: 30px;">
     <div class="col-sm-10"><h2><{$title}>

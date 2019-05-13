@@ -3,8 +3,8 @@ use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_assignment_adm_main.tpl';
-require_once 'header.php';
-require_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 /*-----------function區--------------*/
 
 //列出所有tad_assignment資料
@@ -26,14 +26,14 @@ function list_tad_assignment($show_function = 1)
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $all_data = [];
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
             $$k = $v;
         }
 
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {
-            $uid_name = XoopsUser::getUnameFromId($uid, 0);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
         $start_date = date('Y-m-d H:i', xoops_getUserTimestamp($start_date));
@@ -80,4 +80,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-require_once 'footer.php';
+require_once __DIR__ . '/footer.php';
