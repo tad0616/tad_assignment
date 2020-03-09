@@ -68,7 +68,7 @@ function insert_tad_assignment_file()
     $_POST['desc'] = $myts->addSlashes($_POST['desc']);
     $_POST['author'] = $myts->addSlashes($_POST['author']);
     $_POST['email'] = $myts->addSlashes($_POST['email']);
-    $_POST['assn'] = (int)$_POST['assn'];
+    $_POST['assn'] = (int) $_POST['assn'];
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_assignment_file') . " (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -87,14 +87,14 @@ function upload_file($asfsn = '', $assn = '')
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
     set_time_limit(0);
     ini_set('memory_limit', '150M');
-    $flv_handle = new upload($_FILES['file'], 'zh_TW');
+    $flv_handle = new \Verot\Upload\Upload($_FILES['file'], 'zh_TW');
     if ($flv_handle->uploaded) {
         //$name=substr($_FILES['file']['name'],0,-4);
         $flv_handle->file_safe_name = false;
         $flv_handle->mime_check = false;
 
         $flv_handle->auto_create_dir = true;
-        $flv_handle->file_new_name_body = (string)($asfsn);
+        $flv_handle->file_new_name_body = (string) ($asfsn);
         $flv_handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
         $now = date('Y-m-d H:i:s');
         if ($flv_handle->processed) {
