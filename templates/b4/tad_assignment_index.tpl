@@ -1,5 +1,6 @@
 <{$toolbar}>
 <{if $now_op=="list_tad_assignment_menu"}>
+  <h2 style="display:none;"><{$smarty.const._MD_TADASSIGN_ASSN_LIST}></h2>
 
   <{if $all}>
     <div class="form-group row">
