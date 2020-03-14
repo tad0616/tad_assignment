@@ -1,10 +1,15 @@
-Tad Assignment 2.5.2 (released from 2019-05-10)
+Tad Assignment 2.5.3 (2020-03-14 released)
+=====================================================
+1.Fix the problem of unable to upload
+2. corrected for 2.0 AA accessibility standards
+
+Tad Assignment 2.5.2 (2019-05-10 released)
 ==========================================================
 1. Support XOOPS 2.5.10
 2. No longer supports PHP 5.3
 
 
-Tad Assignment 2.5.1 (released from 2019-01-01)
+Tad Assignment 2.5.1 (2019-01-01 released)
 ==========================================================
 1. Support BootStrap4
 2. Remove the Big5 language
