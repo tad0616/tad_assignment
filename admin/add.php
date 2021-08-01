@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_assignment_adm_add.tpl';
@@ -74,30 +75,33 @@ function update_tad_assignment($assn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
 
 switch ($op) {
     //新增資料
     case 'insert_tad_assignment':
         insert_tad_assignment();
         header('location: index.php');
-        break;
+        exit;
+
     //輸入表格
     case 'tad_assignment_form':
         tad_assignment_form($assn);
         break;
+
     //刪除資料
     case 'delete_tad_assignment':
         delete_tad_assignment($assn);
         header('location: index.php');
-        break;
+        exit;
+
     //更新資料
     case 'update_tad_assignment':
         update_tad_assignment($assn);
         header('location: index.php');
-        break;
+        exit;
+
     //預設動作
     default:
         tad_assignment_form($assn);

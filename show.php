@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\FancyBox;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -11,9 +12,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 //列出所有tad_assignment資料
 function list_tad_assignment_menu()
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
-
-    // $where=($isAdmin)?"":"where `show`='1'";
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
 
     $sql = 'select assn,title,uid,start_date from ' . $xoopsDB->prefix('tad_assignment') . " $where order by start_date desc";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -39,7 +38,7 @@ function list_tad_assignment_menu()
 //列出所有tad_assignment_file資料
 function list_tad_assignment_file($assn = '')
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
 
     $DBV = get_tad_assignment($assn);
     foreach ($DBV as $k => $v) {
@@ -107,10 +106,9 @@ function delete_tad_assignment_file($asfsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
-$asfsn = system_CleanVars($_REQUEST, 'asfsn', 0, 'int');
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
+$asfsn = Request::getInt('asfsn');
 
 switch ($op) {
     //刪除資料
@@ -118,7 +116,7 @@ switch ($op) {
         delete_tad_assignment_file($asfsn);
         header("location: show.php?assn=$assn");
         exit;
-        break;
+
     default:
         list_tad_assignment_menu();
         if (!empty($assn)) {
@@ -129,6 +127,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('isAdmin', $isAdmin);
-
 require_once XOOPS_ROOT_PATH . '/footer.php';

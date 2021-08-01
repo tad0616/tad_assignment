@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -62,9 +63,8 @@ function delete_tad_assignment($assn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
 
 switch ($op) {
     //刪除資料
@@ -72,7 +72,7 @@ switch ($op) {
         delete_tad_assignment($assn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //預設動作
     default:
         list_tad_assignment();

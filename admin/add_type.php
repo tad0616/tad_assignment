@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
@@ -17,7 +18,7 @@ function add_type_form()
     $i = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
 
-            $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
+        $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
         $i++;
 
     }
@@ -58,22 +59,21 @@ function mk_type()
     fclose($fp);
 }
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
-$type = system_CleanVars($_REQUEST, 'type', '', 'string');
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
+$type = Request::getString('type');
 
 switch ($op) {
     case 'add_type':
         add_type();
         header("location: {$_SERVER['PHP_SELF']}?t={$_FILES['file']['type']}");
         exit;
-        break;
+
     case 'del_type':
         del_type($type);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //預設動作
     default:
         add_type_form();

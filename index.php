@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -110,10 +111,8 @@ function upload_file($asfsn = '', $assn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
 
 switch ($op) {
     //新增資料
@@ -121,7 +120,7 @@ switch ($op) {
         $assn = insert_tad_assignment_file();
         header("location: show.php?assn=$assn");
         exit;
-        break;
+
     //預設動作
     default:
         if (!empty($assn)) {
@@ -134,6 +133,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('isAdmin', $isAdmin);
-
 require_once XOOPS_ROOT_PATH . '/footer.php';
