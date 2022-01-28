@@ -1,3 +1,7 @@
+Tad Assignment 2.7 (2022-01-28 released)
+====================================
+1.Support BootStrap5
+
 Tad Assignment 2.6 (2021-08-01 released)
 ====================================
 1.Compliant with the new Accessibility AA Standard 2021/07

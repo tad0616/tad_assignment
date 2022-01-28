@@ -1,7 +1,7 @@
 <{$toolbar}>
 <h2><{$smarty.const._MD_TADASSIGN_SELECT_ASSN}></h2>
 
-<div class="form-group row">
+<div class="form-group row mb-3">
   <label class="col-sm-3 col-form-label text-sm-right control-label">
     <{$smarty.const._MD_TADASSIGN_SELECT_ASSN}>
   </label>
@@ -20,7 +20,7 @@
 <hr>
 
 <{if $now_op=="list_tad_assignment_file" and $show!="1" and !$smarty.session.tad_assignment_adm}>
-  <h2 class="sr-only"><{$smarty.const._MD_TADASSIGN_HIDE}></h2>
+  <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_HIDE}></h2>
   <div class="jumbotron">
     <{$smarty.const._MD_TADASSIGN_HIDE}>
   </div>

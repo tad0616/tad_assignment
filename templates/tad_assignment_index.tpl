@@ -1,9 +1,9 @@
 <{$toolbar}>
 <{if $now_op=="list_tad_assignment_menu"}>
-  <h2 class="sr-only"><{$smarty.const._MD_TADASSIGN_ASSN_LIST}></h2>
+  <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_ASSN_LIST}></h2>
 
   <{if $all}>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
       <label class="col-sm-3 col-form-label text-sm-right control-label">
         <{$smarty.const._MD_TADASSIGN_SELECT_ASSN}>
       </label>
@@ -17,13 +17,13 @@
       </div>
     </div>
   <{elseif $smarty.session.tad_assignment_adm}>
-    <h2 class="sr-only"><{$smarty.const._MD_TADASSIGN_EMPTY}></h2>
+    <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_EMPTY}></h2>
     <div class="jumbotron">
       <{$smarty.const._MD_TADASSIGN_EMPTY}>
       <a href="admin/add.php" class="btn btn-info"><{$smarty.const._TAD_ADD}></a>
     </div>
   <{else}>
-    <h2 class="sr-only"><{$smarty.const._MD_TADASSIGN_EMPTY}></h2>
+    <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_EMPTY}></h2>
     <div class="jumbotron">
       <{$smarty.const._MD_TADASSIGN_EMPTY}>
     </div>
