@@ -64,11 +64,10 @@ function insert_tad_assignment_file()
     }
     $now = date('Y-m-d H:i:s');
 
-    $myts = \MyTextSanitizer::getInstance();
-    $_POST['show_name'] = $myts->addSlashes($_POST['show_name']);
-    $_POST['desc'] = $myts->addSlashes($_POST['desc']);
-    $_POST['author'] = $myts->addSlashes($_POST['author']);
-    $_POST['email'] = $myts->addSlashes($_POST['email']);
+    $_POST['show_name'] = $xoopsDB->escape($_POST['show_name']);
+    $_POST['desc'] = $xoopsDB->escape($_POST['desc']);
+    $_POST['author'] = $xoopsDB->escape($_POST['author']);
+    $_POST['email'] = $xoopsDB->escape($_POST['email']);
     $_POST['assn'] = (int) $_POST['assn'];
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_assignment_file') . " (`assn` , `my_passwd` , `show_name` , `desc` , `author` , `email` ,`score`,`comment` , `up_time`) values('{$_POST['assn']}','{$_POST['my_passwd']}','{$_POST['show_name']}','{$_POST['desc']}','{$_POST['author']}','{$_POST['email']}' ,0, '', '$now')";
