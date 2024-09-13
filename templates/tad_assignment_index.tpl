@@ -18,13 +18,13 @@
     </div>
   <{elseif $smarty.session.tad_assignment_adm}>
     <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_EMPTY}></h2>
-    <div class="jumbotron">
+    <div class="jumbotron bg-light p-5 rounded-lg m-3">
       <{$smarty.const._MD_TADASSIGN_EMPTY}>
       <a href="admin/add.php" class="btn btn-info"><{$smarty.const._TAD_ADD}></a>
     </div>
   <{else}>
     <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_EMPTY}></h2>
-    <div class="jumbotron">
+    <div class="jumbotron bg-light p-5 rounded-lg m-3">
       <{$smarty.const._MD_TADASSIGN_EMPTY}>
     </div>
   <{/if}>

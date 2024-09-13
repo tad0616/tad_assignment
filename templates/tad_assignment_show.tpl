@@ -21,7 +21,7 @@
 
 <{if $now_op=="list_tad_assignment_file" and $show!="1" and !$smarty.session.tad_assignment_adm}>
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_HIDE}></h2>
-  <div class="jumbotron">
+  <div class="jumbotron bg-light p-5 rounded-lg m-3">
     <{$smarty.const._MD_TADASSIGN_HIDE}>
   </div>
 <{/if}>
