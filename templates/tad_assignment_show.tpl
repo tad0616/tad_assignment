@@ -8,7 +8,7 @@
   <div class="col-sm-9">
     <select onChange="window.location.href='show.php?assn='+this.value" class="form-control" title="select assignment">
       <option value=''><{$smarty.const._MD_TADASSIGN_SELECT_ASSN}></option>
-      <{if $select_assn_all}>
+      <{if $select_assn_all|default:false}>
         <{foreach from=$select_assn_all item=data}>
           <option value='<{$data.assn}>' <{if $assn==$data.assn}>selected<{/if}>><{$data.start_date}> <{$data.title}> (<{$data.uid_name}>) </option>
         <{/foreach}>
@@ -30,23 +30,23 @@
 
   <div class="row" style="margin-top: 30px;">
     <div class="col-sm-10">
-      <{if $title}>
+      <{if $title|default:false}>
         <h2>
           <{$title}>
-          <{if $assn}><small><a href="index.php?assn=<{$assn}>" class="btn btn-primary"><{$smarty.const._MD_SAVE}></a></small><{/if}>
+          <{if $assn|default:false}><small><a href="index.php?assn=<{$assn}>" class="btn btn-primary"><{$smarty.const._MD_SAVE}></a></small><{/if}>
         </h2>
       <{/if}>
     </div>
     <div class="col-sm-2"></div>
   </div>
-  <{if $file_data}>
+  <{if $file_data|default:false}>
     <table class="table table-striped table-bordered table-hover">
       <tr>
         <th><{$smarty.const._MD_TADASSIGN_UP_TIME}></th>
         <th><{$smarty.const._MD_TADASSIGN_FILENAME}></th>
         <th><{$smarty.const._MD_TADASSIGN_DESC}></th>
         <th><{$smarty.const._MD_TADASSIGN_AUTHOR}></th>
-        <{if $smarty.session.tad_assignment_adm}><th><{$smarty.const._TAD_FUNCTION}></th><{/if}>
+        <{if $smarty.session.tad_assignment_adm|default:false}><th><{$smarty.const._TAD_FUNCTION}></th><{/if}>
       </tr>
       <tbody>
       <{foreach from=$file_data item=all}>
@@ -61,7 +61,7 @@
           </td>
           <td><{$all.desc}></td>
           <td><{$all.author}></td>
-          <{if $smarty.session.tad_assignment_adm}>
+          <{if $smarty.session.tad_assignment_adm|default:false}>
           <td>
             <a href="javascript:delete_func(<{$all.asfsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
           </td>

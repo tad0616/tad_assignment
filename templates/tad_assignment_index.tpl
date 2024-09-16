@@ -2,7 +2,7 @@
 <{if $now_op=="list_tad_assignment_menu"}>
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_ASSN_LIST}></h2>
 
-  <{if $all}>
+  <{if $all|default:false}>
     <div class="form-group row mb-3">
       <label class="col-sm-3 col-form-label text-sm-right control-label">
         <{$smarty.const._MD_TADASSIGN_SELECT_ASSN}>
@@ -31,7 +31,7 @@
 <{elseif $now_op=="tad_assignment_file_form"}>
   <h2><{$title}></h2>
   <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-    <{if $note}>
+    <{if $note|default:false}>
       <div class="alert alert-info">
         <{$note}>
       </div>
