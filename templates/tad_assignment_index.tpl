@@ -1,4 +1,4 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 <{if $now_op=="list_tad_assignment_menu"}>
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADASSIGN_ASSN_LIST}></h2>
 
@@ -29,11 +29,11 @@
     </div>
   <{/if}>
 <{elseif $now_op=="tad_assignment_file_form"}>
-  <h2><{$title}></h2>
+  <h2><{$title|default:''}></h2>
   <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <{if $note|default:false}>
       <div class="alert alert-info">
-        <{$note}>
+        <{$note|default:''}>
       </div>
     <{/if}>
     <table class="table table-striped table-bordered table-hover">
@@ -57,7 +57,7 @@
       </tr>
     </table>
     <div class="text-center">
-        <input type="hidden" name="assn" value="<{$assn}>">
+        <input type="hidden" name="assn" value="<{$assn|default:''}>">
         <input type="hidden" name="op" value="insert_tad_assignment_file">
         <button type="submit"  class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
     </div>

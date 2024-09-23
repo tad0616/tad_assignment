@@ -1,4 +1,4 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 <h2><{$smarty.const._MD_TADASSIGN_SELECT_ASSN}></h2>
 
 <div class="form-group row mb-3">
@@ -32,8 +32,8 @@
     <div class="col-sm-10">
       <{if $title|default:false}>
         <h2>
-          <{$title}>
-          <{if $assn|default:false}><small><a href="index.php?assn=<{$assn}>" class="btn btn-primary"><{$smarty.const._MD_SAVE}></a></small><{/if}>
+          <{$title|default:''}>
+          <{if $assn|default:false}><small><a href="index.php?assn=<{$assn|default:''}>" class="btn btn-primary"><{$smarty.const._MD_SAVE}></a></small><{/if}>
         </h2>
       <{/if}>
     </div>
@@ -56,7 +56,7 @@
             <{if $now_op=="list_tad_assignment_file" and $show!="1" and !$smarty.session.tad_assignment_adm}>
             <{$all.file_name}>
             <{elseif $now_op=="list_tad_assignment_file"}>
-          	<a href='<{$smarty.const._TAD_ASSIGNMENT_UPLOAD_URL}><{$all.assn}>/<{$all.asfsn}>.<{$all.sub_name}>'  class="assignment_fancy_<{$assn}>" rel="group" title="<{$all.author}> (<{$all.up_time}>) <{$all.file_name}>"><{$all.file_name}></a>
+          	<a href='<{$smarty.const._TAD_ASSIGNMENT_UPLOAD_URL}><{$all.assn}>/<{$all.asfsn}>.<{$all.sub_name}>'  class="assignment_fancy_<{$assn|default:''}>" rel="group" title="<{$all.author}> (<{$all.up_time}>) <{$all.file_name}>"><{$all.file_name}></a>
           	<{/if}>
           </td>
           <td><{$all.desc}></td>

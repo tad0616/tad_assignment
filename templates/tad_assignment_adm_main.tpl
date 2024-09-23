@@ -42,5 +42,5 @@
 
     </tbody>
   </table>
-  <{$bar}>
+  <{$bar|default:''}>
 </div>
