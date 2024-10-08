@@ -2,7 +2,7 @@ Tad Assignment 3.0 (尚未釋出)
 ====================================
 1.支援XOOPS 2.5.11
 2.支援PHP8.3
-3.用$xoopsDB->escape()取代$myts->addSlashes()
+3.資料庫語法參數化
 
 
 Tad Assignment 2.7 (2022-01-28 釋出)

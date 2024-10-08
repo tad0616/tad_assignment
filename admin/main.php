@@ -9,22 +9,17 @@ require_once dirname(__DIR__) . '/function.php';
 /*-----------function區--------------*/
 
 //列出所有tad_assignment資料
-function list_tad_assignment($show_function = 1)
+function list_tad_assignment()
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl;
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment') . ' order by start_date desc';
-
-    //PageBar(資料數, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $total = $xoopsDB->getRowsNum($result);
-
+    global $xoopsDB, $xoopsTpl;
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment') . '` ORDER BY `start_date` DESC';
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 10, 10);
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $all_data = [];
     $i = 0;
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
@@ -58,8 +53,9 @@ function list_tad_assignment($show_function = 1)
 function delete_tad_assignment($assn = '')
 {
     global $xoopsDB;
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment') . " where assn='$assn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment') . '` WHERE `assn`=?';
+    Utility::query($sql, 'i', [$assn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 /*-----------執行動作判斷區----------*/

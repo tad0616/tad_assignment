@@ -3,10 +3,10 @@ use XoopsModules\Tadtools\Utility;
 //區塊主函式 (列出目前開放上傳的作業項目)
 function tad_new_assignment($options)
 {
-    global $xoopsDB, $xoopsModule;
+    global $xoopsDB;
     $now = xoops_getUserTimestamp(time());
-    $sql = 'select assn,title,uid,start_date from ' . $xoopsDB->prefix('tad_assignment') . " where start_date < '$now' and end_date > '$now'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `assn`, `title`, `uid`, `start_date` FROM `' . $xoopsDB->prefix('tad_assignment') . '` WHERE `start_date` < ? AND `end_date` > ?';
+    $result = Utility::query($sql, 'ss', [$now, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
     $block = [];

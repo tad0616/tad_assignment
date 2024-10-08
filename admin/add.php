@@ -9,7 +9,7 @@ require_once dirname(__DIR__) . '/function.php';
 //tad_assignment編輯表單
 function tad_assignment_form($assn = '')
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsTpl;
 
     //抓取預設值
     if (!empty($assn)) {
@@ -49,11 +49,12 @@ function tad_assignment_form($assn = '')
 function insert_tad_assignment()
 {
     global $xoopsDB, $xoopsUser;
-    $uid = $xoopsUser->getVar('uid');
+    $uid = $xoopsUser->uid();
     $start_date = strtotime($_POST['start_date']);
     $end_date = strtotime($_POST['end_date']);
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_assignment') . " (`title`,`passwd`,`start_date`,`end_date`,`note`,`uid`,`show`) values('{$_POST['title']}','{$_POST['passwd']}','{$start_date}','{$end_date}','{$_POST['note']}','{$uid}','{$_POST['show']}')";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_assignment') . '` (`title`, `passwd`, `start_date`, `end_date`, `note`, `uid`, `show`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    Utility::query($sql, 'sssssis', [$_POST['title'], $_POST['passwd'], $start_date, $end_date, $_POST['note'], $uid, $_POST['show']]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     //取得最後新增資料的流水編號
     $assn = $xoopsDB->getInsertId();
 
@@ -64,12 +65,21 @@ function insert_tad_assignment()
 function update_tad_assignment($assn = '')
 {
     global $xoopsDB, $xoopsUser;
-    $uid = $xoopsUser->getVar('uid');
+    $uid = $xoopsUser->uid();
     $start_date = strtotime($_POST['start_date']);
     $end_date = strtotime($_POST['end_date']);
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_assignment') . " set  `title` = '{$_POST['title']}', `passwd` = '{$_POST['passwd']}', `start_date` = '{$start_date}', `end_date` = '{$end_date}', `note` = '{$_POST['note']}', `uid` = '{$uid}', `show` = '{$_POST['show']}' where assn='$assn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_assignment') . '` SET `title` = ?, `passwd` = ?, `start_date` = ?, `end_date` = ?, `note` = ?, `uid` = ?, `show` = ? WHERE `assn` = ?';
+    Utility::query($sql, 'sssssisi', [
+        $_POST['title'],
+        $_POST['passwd'],
+        $start_date,
+        $end_date,
+        $_POST['note'],
+        $uid,
+        $_POST['show'],
+        $assn,
+    ]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $assn;
 }

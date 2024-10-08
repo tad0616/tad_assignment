@@ -1,5 +1,6 @@
 <?php
 $modversion = [];
+global $xoopsConfig;
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADASSIGN_NAME;

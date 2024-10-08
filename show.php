@@ -8,14 +8,38 @@ require_once __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_assignment_show.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
+$asfsn = Request::getInt('asfsn');
+
+switch ($op) {
+    //刪除資料
+    case 'delete_tad_assignment_file':
+        delete_tad_assignment_file($asfsn);
+        header("location: show.php?assn=$assn");
+        exit;
+
+    default:
+        list_tad_assignment_menu();
+        if (!empty($assn)) {
+            list_tad_assignment_file($assn);
+        }
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+require_once XOOPS_ROOT_PATH . '/footer.php';
+
 /*-----------function區--------------*/
 //列出所有tad_assignment資料
 function list_tad_assignment_menu()
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
-    $sql = 'select assn,title,uid,start_date from ' . $xoopsDB->prefix('tad_assignment') . " $where order by start_date desc";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `assn`, `title`, `uid`, `start_date` FROM `' . $xoopsDB->prefix('tad_assignment') . '` ORDER BY `start_date` DESC';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
     $alldata = [];
@@ -38,7 +62,7 @@ function list_tad_assignment_menu()
 //列出所有tad_assignment_file資料
 function list_tad_assignment_file($assn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
     $DBV = get_tad_assignment($assn);
     foreach ($DBV as $k => $v) {
@@ -46,8 +70,8 @@ function list_tad_assignment_file($assn = '')
         $xoopsTpl->assign($k, $v);
     }
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment_file') . " where assn='{$assn}' order by `up_time` desc";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `assn`=? ORDER BY `up_time` DESC';
+    $result = Utility::query($sql, 'i', [$assn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
     $data = [];
@@ -86,8 +110,9 @@ function delete_tad_assignment_file($asfsn = '')
 {
     global $xoopsDB;
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment_file') . " where asfsn='{$asfsn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn`=?';
+    $result = Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -101,30 +126,7 @@ function delete_tad_assignment_file($asfsn = '')
 
     unlink(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/{$asfsn}.{$sub_name}");
 
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment_file') . " where asfsn='$asfsn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn`=?';
+    Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$assn = Request::getInt('assn');
-$asfsn = Request::getInt('asfsn');
-
-switch ($op) {
-    //刪除資料
-    case 'delete_tad_assignment_file':
-        delete_tad_assignment_file($asfsn);
-        header("location: show.php?assn=$assn");
-        exit;
-
-    default:
-        list_tad_assignment_menu();
-        if (!empty($assn)) {
-            list_tad_assignment_file($assn);
-        }
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-require_once XOOPS_ROOT_PATH . '/footer.php';

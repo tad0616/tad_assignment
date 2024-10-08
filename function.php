@@ -13,8 +13,9 @@ function get_tad_assignment($assn = '')
         return;
     }
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_assignment') . " where assn='$assn'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment') . '` WHERE `assn`=?';
+    $result = Utility::query($sql, 'i', [$assn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
