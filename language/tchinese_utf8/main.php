@@ -1,19 +1,7 @@
 <?php
 xoops_loadLanguage('main', 'tadtools');
-define('_MD_SHOW', '上傳展示');
-
-//月曆用
-define('_W0', '日');
-define('_W1', '一');
-define('_W2', '二');
-define('_W3', '三');
-define('_W4', '四');
-define('_W5', '五');
-define('_W6', '六');
-
-define('_M', '月');
-define('_WEEK', '週');
-define('_TODAY', '今天');
+define('_MD_TAD_ASSIGNMENT_INDEX', '上傳作業');
+define('_MD_TAD_ASSIGNMENT_SHOW', '上傳展示');
 
 define('_MD_TADASSIGN_ASSN_LIST', '上傳主題一覽');
 define('_MD_TADASSIGN_ASSN', '上傳編號');

@@ -1,19 +1,7 @@
 <?php
 xoops_loadLanguage('main', 'tadtools');
-define('_MD_SHOW', 'Topic display');
-
-//月曆用
-define('_W0', 'Sun');
-define('_W1', 'Mon');
-define('_W2', 'Tue');
-define('_W3', 'Wed');
-define('_W4', 'Thu');
-define('_W5', 'Fri');
-define('_W6', 'Sat');
-
-define('_M', 'Month');
-//define('_WEEK', 'Week');
-//define('_TODAY', 'Today');
+define('_MD_TAD_ASSIGNMENT_INDEX', 'Uploading');
+define('_MD_TAD_ASSIGNMENT_SHOW', 'Topic display');
 
 define('_MD_TADASSIGN_ASSN_LIST', 'List upload topic');
 define('_MD_TADASSIGN_ASSN', 'Upload sn');
