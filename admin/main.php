@@ -44,7 +44,7 @@ function list_tad_assignment()
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
 
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $all_data = [];
     $i = 0;
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
