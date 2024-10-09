@@ -9,21 +9,15 @@ $adminmenu[$i]['desc'] = _MI_TAD_ADMIN_HOME_DESC;
 $adminmenu[$i]['icon'] = 'images/admin/home.png';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_TADASSIGN_ADMENU1;
+$adminmenu[$i]['title'] = _MI_TAD_ASSIGNMENT_ADMENU1;
 $adminmenu[$i]['link'] = 'admin/main.php';
-$adminmenu[$i]['desc'] = _MI_TADASSIGN_ADMENU1;
+$adminmenu[$i]['desc'] = _MI_TAD_ASSIGNMENT_ADMENU1;
 $adminmenu[$i]['icon'] = 'images/admin/folder.png';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_TADASSIGN_ADMENU2;
-$adminmenu[$i]['link'] = 'admin/add.php';
-$adminmenu[$i]['desc'] = _MI_TADASSIGN_ADMENU2;
-$adminmenu[$i]['icon'] = 'images/admin/add.png';
-
-$i++;
-$adminmenu[$i]['title'] = _MI_TADASSIGN_ADMENU3;
+$adminmenu[$i]['title'] = _MI_TAD_ASSIGNMENT_ADMENU3;
 $adminmenu[$i]['link'] = 'admin/add_type.php';
-$adminmenu[$i]['desc'] = _MI_TADASSIGN_ADMENU3;
+$adminmenu[$i]['desc'] = _MI_TAD_ASSIGNMENT_ADMENU3;
 $adminmenu[$i]['icon'] = 'images/admin/type.png';
 
 $i++;

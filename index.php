@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -21,14 +22,17 @@ switch ($op) {
     default:
         if (!empty($assn)) {
             tad_assignment_file_form($assn);
+            $op = 'tad_assignment_file_form';
         } else {
             list_tad_assignment_menu();
+            $op = 'list_tad_assignment_menu';
         }
         break;
 }
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------function區--------------*/
@@ -57,13 +61,12 @@ function list_tad_assignment_menu()
     }
 
     $xoopsTpl->assign('all', $data);
-    $xoopsTpl->assign('now_op', 'list_tad_assignment_menu');
 }
 
 //tad_assignment_file編輯表單
 function tad_assignment_file_form($assn = '')
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsTpl;
 
     $DBV = get_tad_assignment($assn);
     foreach ($DBV as $k => $v) {
@@ -72,26 +75,30 @@ function tad_assignment_file_form($assn = '')
     }
 
     $xoopsTpl->assign('note', nl2br($note));
-    $xoopsTpl->assign('now_op', 'tad_assignment_file_form');
+    $FormValidator = new FormValidator("#myForm", false);
+    $FormValidator->render('topLeft');
 }
 
 //新增資料到tad_assignment_file中
 function insert_tad_assignment_file()
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsUser;
     if (empty($_FILES['file']['name'])) {
-        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADASSIGN_NEED_FILE);
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TAD_ASSIGNMENT_NEED_FILE);
     }
 
     $assignment = get_tad_assignment($_POST['assn']);
 
     if ($_POST['passwd'] != $assignment['passwd']) {
-        redirect_header($_SERVER['PHP_SELF'], 3, _TAD_ASSIGNMENT_WRONG_PASSWD);
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_ASSIGNMENT_WRONG_PASSWD);
     }
     $now = date('Y-m-d H:i:s');
+    $email = $xoopsUser ? $xoopsUser->email() : $_POST['email'];
+    $email = $email ? $email : '';
+    $author = $xoopsUser ? $xoopsUser->name() : $_POST['author'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_assignment_file') . '` (`assn`, `my_passwd`, `show_name`, `desc`, `author`, `email`, `score`, `comment`, `up_time`) VALUES (?, ?, ?, ?, ?, ?, 0, "", ?)';
-    Utility::query($sql, 'isssiss', [$_POST['assn'], $_POST['my_passwd'], $_POST['show_name'], $_POST['desc'], $_POST['author'], $_POST['email'], $now]) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'issssss', [$_POST['assn'], '', $author, $_POST['desc'], $author, $email, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $asfsn = $xoopsDB->getInsertId();
@@ -107,7 +114,7 @@ function upload_file($asfsn = '', $assn = '')
     global $xoopsDB;
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
     set_time_limit(0);
-    ini_set('memory_limit', '150M');
+    ini_set('memory_limit', '220M');
     $flv_handle = new \Verot\Upload\Upload($_FILES['file'], 'zh_TW');
     if ($flv_handle->uploaded) {
         //$name=substr($_FILES['file']['name'],0,-4);

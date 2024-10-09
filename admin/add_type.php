@@ -1,8 +1,9 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 /*-----------執行動作判斷區----------*/
@@ -24,11 +25,13 @@ switch ($op) {
     //預設動作
     default:
         add_type_form();
+        $op = 'add_type_form';
         break;
 }
 
 /*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
+$xoTheme->addStylesheet('modules/tadtools/css/my-input.css');
+$xoopsTpl->assign('now_op', $op);
 require_once __DIR__ . '/footer.php';
 
 /*-----------function區--------------*/
@@ -49,6 +52,9 @@ function add_type_form()
 
     }
     $xoopsTpl->assign('all', $all);
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_type_func', "add_type.php?op=del_type&type=", 'ftype');
 }
 
 function add_type()

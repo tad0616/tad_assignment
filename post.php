@@ -1,22 +1,62 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_assignment_adm_add.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_index.tpl';
 require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
+
+if (!array_intersect($_SESSION['groups'], $xoopsModuleConfig['create_group'])) {
+    redirect_header('index.php', 3, _MD_TAD_ASSIGNMENT_NO_PERM);
+}
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
+
+switch ($op) {
+    //新增資料
+    case 'insert_tad_assignment':
+        insert_tad_assignment();
+        header('location: index.php');
+        exit;
+
+    //輸入表格
+    case 'tad_assignment_form':
+        tad_assignment_form($assn);
+        break;
+
+    //刪除資料
+    case 'delete_tad_assignment':
+        delete_tad_assignment($assn);
+        header('location: index.php');
+        exit;
+
+    //更新資料
+    case 'update_tad_assignment':
+        update_tad_assignment($assn);
+        header('location: index.php');
+        exit;
+
+    //預設動作
+    default:
+        tad_assignment_form($assn);
+        $op = 'tad_assignment_form';
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('now_op', $op);
+require_once XOOPS_ROOT_PATH . '/footer.php';
 /*-----------function區--------------*/
+
 //tad_assignment編輯表單
 function tad_assignment_form($assn = '')
 {
-    global $xoopsTpl;
-
+    global $xoopsTpl, $xoTheme, $xoopsUser;
     //抓取預設值
-    if (!empty($assn)) {
-        $DBV = get_tad_assignment($assn);
-    } else {
-        $DBV = [];
-    }
+    $DBV = !empty($assn) ? get_tad_assignment($assn) : [];
 
     //預設值設定
 
@@ -29,9 +69,10 @@ function tad_assignment_form($assn = '')
     $uid = (!isset($DBV['uid'])) ? '' : $DBV['uid'];
     $show = (!isset($DBV['show'])) ? '1' : $DBV['show'];
 
-    $start_date_form = "<input type='text' value='{$start_date}' size='15'  class='form-control' name='start_date' id='start_date' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">";
-
-    $end_date_form = "<input type='text' value='{$end_date}' size='15'  class='form-control' name='end_date' id='end_date' onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})\">";
+    $now_uid = $xoopsUser ? $xoopsUser->uid() : 0;
+    if ($uid != $now_uid && !$_SESSION['tad_assignment_adm']) {
+        redirect_header('index.php', 3, _MD_TAD_ASSIGNMENT_NO_PERM);
+    }
 
     $op = (empty($assn)) ? 'insert_tad_assignment' : 'update_tad_assignment';
 
@@ -39,10 +80,14 @@ function tad_assignment_form($assn = '')
     $xoopsTpl->assign('title', $title);
     $xoopsTpl->assign('note', $note);
     $xoopsTpl->assign('passwd', $passwd);
-    $xoopsTpl->assign('start_date_form', $start_date_form);
-    $xoopsTpl->assign('end_date_form', $end_date_form);
+    $xoopsTpl->assign('start_date', $start_date);
+    $xoopsTpl->assign('end_date', $end_date);
     $xoopsTpl->assign('show', $show);
     $xoopsTpl->assign('op', $op);
+    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
+    $xoTheme->addStylesheet('modules/tadtools/css/font-awesome/css/font-awesome.css');
+    $FormValidator = new FormValidator("#myForm", false);
+    $FormValidator->render();
 }
 
 //新增資料到tad_assignment中
@@ -83,41 +128,3 @@ function update_tad_assignment($assn = '')
 
     return $assn;
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$assn = Request::getInt('assn');
-
-switch ($op) {
-    //新增資料
-    case 'insert_tad_assignment':
-        insert_tad_assignment();
-        header('location: index.php');
-        exit;
-
-    //輸入表格
-    case 'tad_assignment_form':
-        tad_assignment_form($assn);
-        break;
-
-    //刪除資料
-    case 'delete_tad_assignment':
-        delete_tad_assignment($assn);
-        header('location: index.php');
-        exit;
-
-    //更新資料
-    case 'update_tad_assignment':
-        update_tad_assignment($assn);
-        header('location: index.php');
-        exit;
-
-    //預設動作
-    default:
-        tad_assignment_form($assn);
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
-require_once __DIR__ . '/footer.php';

@@ -1,11 +1,36 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_assignment_adm_main.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
+
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$assn = Request::getInt('assn');
+
+switch ($op) {
+    //刪除資料
+    case 'delete_tad_assignment':
+        delete_tad_assignment($assn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //預設動作
+    default:
+        list_tad_assignment();
+        $op = 'list_tad_assignment';
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoTheme->addStylesheet('modules/tadtools/css/my-input.css');
+$xoopsTpl->assign('now_op', $op);
+require_once __DIR__ . '/footer.php';
+
 /*-----------function區--------------*/
 
 //列出所有tad_assignment資料
@@ -47,6 +72,9 @@ function list_tad_assignment()
 
     $xoopsTpl->assign('all_data', $all_data);
     $xoopsTpl->assign('bar', $bar);
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_assignment_func', "main.php?op=delete_tad_assignment&assn=", 'assn');
 }
 
 //刪除tad_assignment某筆資料資料
@@ -57,24 +85,3 @@ function delete_tad_assignment($assn = '')
     Utility::query($sql, 'i', [$assn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$assn = Request::getInt('assn');
-
-switch ($op) {
-    //刪除資料
-    case 'delete_tad_assignment':
-        delete_tad_assignment($assn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //預設動作
-    default:
-        list_tad_assignment();
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
-require_once __DIR__ . '/footer.php';

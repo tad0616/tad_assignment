@@ -3,12 +3,12 @@ $modversion = [];
 global $xoopsConfig;
 
 //---模組基本資訊---//
-$modversion['name'] = _MI_TADASSIGN_NAME;
+$modversion['name'] = _MI_TAD_ASSIGNMENT_NAME;
 // $modversion['version'] = 2.7;
 $modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '3.0.0-Stable' : '3.0';
-$modversion['description'] = _MI_TADASSIGN_DESC;
-$modversion['author'] = _MI_TADASSIGN_AUTHOR;
-$modversion['credits'] = _MI_TADASSIGN_CREDITS;
+$modversion['description'] = _MI_TAD_ASSIGNMENT_DESC;
+$modversion['author'] = _MI_TAD_ASSIGNMENT_AUTHOR;
+$modversion['credits'] = _MI_TAD_ASSIGNMENT_CREDITS;
 $modversion['help'] = 'page=help';
 $modversion['license'] = 'GNU GPL 2.0';
 $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
@@ -35,9 +35,11 @@ $modversion['paypal']['currency_code'] = 'USD';
 
 //---資料表架構---//
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][1] = 'tad_assignment';
-$modversion['tables'][2] = 'tad_assignment_file';
-$modversion['tables'][3] = 'tad_assignment_types';
+$modversion['tables'] = [
+    'tad_assignment',
+    'tad_assignment_file',
+    'tad_assignment_types',
+];
 
 //---啟動後台管理界面選單---//
 $modversion['system_menu'] = 1;
@@ -54,33 +56,36 @@ $modversion['adminmenu'] = 'admin/menu.php';
 
 //---使用者主選單設定---//
 $modversion['hasMain'] = 1;
-$modversion['sub'][2]['name'] = _MI_TADASSIGN_SMNAME2;
-$modversion['sub'][2]['url'] = 'show.php';
+$modversion['sub'] = [
+    ['name' => _MI_TAD_ASSIGNMENT_SMNAME2, 'url' => 'show.php'],
+    ['name' => _MI_TAD_ASSIGNMENT_SMNAME3, 'url' => 'post.php'],
+];
 
 //---樣板設定---//
-$i = 1;
-$modversion['templates'][$i]['file'] = 'tad_assignment_index.tpl';
-$modversion['templates'][$i]['description'] = 'tad_assignment_index.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_assignment_show.tpl';
-$modversion['templates'][$i]['description'] = 'tad_assignment_show.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_assignment_adm_main.tpl';
-$modversion['templates'][$i]['description'] = 'tad_assignment_adm_main.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_assignment_adm_add.tpl';
-$modversion['templates'][$i]['description'] = 'tad_assignment_adm_add.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_assignment_adm_add_type.tpl';
-$modversion['templates'][$i]['description'] = 'tad_assignment_adm_add_type.tpl';
+$modversion['templates'] = [
+    ['file' => 'tad_assignment_index.tpl', 'description' => 'tad_assignment_index.tpl'],
+    ['file' => 'tad_assignment_admin.tpl', 'description' => 'tad_assignment_admin.tpl'],
+];
 
 //---區塊設定---//
-$modversion['blocks'][1]['file'] = 'tad_new_assignment.php';
-$modversion['blocks'][1]['name'] = _MI_TADASSIGN_BNAME1;
-$modversion['blocks'][1]['description'] = _MI_TADASSIGN_BDESC1;
-$modversion['blocks'][1]['show_func'] = 'tad_new_assignment';
-$modversion['blocks'][1]['template'] = 'tad_new_assignment.tpl';
+$modversion['blocks'] = [
+    [
+        'file' => 'tad_new_assignment.php',
+        'name' => _MI_TAD_ASSIGNMENT_BNAME1,
+        'description' => _MI_TAD_ASSIGNMENT_BDESC1,
+        'show_func' => 'tad_new_assignment',
+        'template' => 'tad_new_assignment.tpl',
+    ],
+];
+
+//---偏好設定---//
+$modversion['config'] = [
+    [
+        'name' => 'create_group',
+        'title' => '_MI_TAD_ASSIGNMENT_CREATE_GROUP',
+        'description' => '_MI_TAD_ASSIGNMENT_CREATE_GROUP_DESC',
+        'formtype' => 'group_multi',
+        'valuetype' => 'array',
+        'default' => [1],
+    ],
+];

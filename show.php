@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
-$xoopsOption['template_main'] = 'tad_assignment_show.tpl';
+$xoopsOption['template_main'] = 'tad_assignment_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
@@ -25,11 +25,13 @@ switch ($op) {
         if (!empty($assn)) {
             list_tad_assignment_file($assn);
         }
+        $op = 'tad_assignment_show';
         break;
 }
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------function區--------------*/
@@ -62,8 +64,9 @@ function list_tad_assignment_menu()
 //列出所有tad_assignment_file資料
 function list_tad_assignment_file($assn = '')
 {
-    global $xoopsDB, $xoopsTpl;
-
+    global $xoopsDB, $xoopsTpl, $xoTheme, $xoopsUser;
+    $now_uid = $xoopsUser ? $xoopsUser->uid() : 0;
+    $xoopsTpl->assign('now_uid', $now_uid);
     $DBV = get_tad_assignment($assn);
     foreach ($DBV as $k => $v) {
         $$k = $v;
@@ -81,7 +84,7 @@ function list_tad_assignment_file($assn = '')
             $data[$i][$k] = $v;
         }
 
-        $show_name = (empty($show_name)) ? $author . _MD_TADASSIGN_UPLOAD_FILE : $show_name;
+        $show_name = (empty($show_name)) ? $author . _MD_TAD_ASSIGNMENT_UPLOAD_FILE : $show_name;
         $filepart = explode('.', $file_name);
         foreach ($filepart as $ff) {
             $sub_name = mb_strtolower($ff);
@@ -92,17 +95,16 @@ function list_tad_assignment_file($assn = '')
 
         $i++;
     }
-
     $xoopsTpl->assign('title', $title);
     $xoopsTpl->assign('assn', $assn);
     $xoopsTpl->assign('file_data', $data);
-    $xoopsTpl->assign('now_op', 'list_tad_assignment_file');
 
     $FancyBox = new FancyBox(".assignment_fancy_{$assn}");
     $FancyBox->render(false);
 
     $SweetAlert = new SweetAlert();
     $SweetAlert->render('delete_func', "show.php?op=delete_tad_assignment_file&assn={$assn}&asfsn=", 'asfsn');
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 }
 
 //刪除tad_assignment_file某筆資料資料
