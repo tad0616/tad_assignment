@@ -29,8 +29,8 @@
           <td><{$as.uid_name}></td>
           <td><{if $as.show=='1'}><{$smarty.const._YES}><{else}><{$smarty.const._NO}><{/if}></td>
           <td>
-            <a href="javascript:delete_tad_assignment_func(<{$as.assn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
-            <a href="../post.php?op=tad_assignment_form&assn=<{$as.assn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+            <a href="javascript:delete_tad_assignment_func(<{$as.assn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+            <a href="../post.php?op=tad_assignment_form&assn=<{$as.assn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
           </td>
         </tr>
       <{/foreach}>

@@ -7,7 +7,7 @@
         <div class="input-group">
           <input type="file" name="file" class="form-control">
             <div class="input-group-append input-group-btn">
-                <button type="submit" class="btn btn-primary" name="op" value="add_type"><{$smarty.const._TAD_SAVE}></button>
+                <button type="submit" class="btn btn-primary" name="op" value="add_type"><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
             </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
   <{foreach from=$all item=data}>
     <tr>
         <td>
-          <a href="javascript:delete_type_func('<{$data.type}>');" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+          <a href="javascript:delete_type_func('<{$data.type}>');" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
           <{$data.type}>
         </td>
     </tr>

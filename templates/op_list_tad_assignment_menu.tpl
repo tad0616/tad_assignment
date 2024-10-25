@@ -18,7 +18,7 @@
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TAD_ASSIGNMENT_EMPTY}></h2>
   <div class="jumbotron bg-light p-5 rounded-lg m-3">
     <{$smarty.const._MD_TAD_ASSIGNMENT_EMPTY}>
-    <a href="post.php" class="btn btn-info"><{$smarty.const._TAD_ADD}></a>
+    <a href="post.php" class="btn btn-info"><i class="fa fa-plus-square" aria-hidden="true"></i>  <{$smarty.const._TAD_ADD}></a>
   </div>
 <{else}>
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TAD_ASSIGNMENT_EMPTY}></h2>

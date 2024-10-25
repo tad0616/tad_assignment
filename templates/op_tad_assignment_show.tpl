@@ -65,7 +65,7 @@
           <td><{$all.author}></td>
           <{if $smarty.session.tad_assignment_adm|default:false}>
           <td>
-            <a href="javascript:delete_func(<{$all.asfsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+            <a href="javascript:delete_func(<{$all.asfsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
           </td>
           <{/if}>
         </tr>
