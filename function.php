@@ -20,21 +20,3 @@ function get_tad_assignment($assn = '')
 
     return $data;
 }
-
-//轉換成時間戳記
-function day2ts($day = '', $sy = '-')
-{
-    if (empty($day)) {
-        $day = date('Y-m-d H:i:s');
-    }
-
-    $dt = explode(' ', $day);
-
-    $d = explode($sy, $dt[0]);
-    $t = explode(':', $dt[1]);
-
-    $ts = mktime($t['0'], $t['1'], $t['2'], $d['1'], $d['2'], $d['0']);
-
-    return $ts;
-}
-/********************* 預設函數 *********************/

@@ -2,11 +2,11 @@
 
 <{if $all|default:false}>
   <div class="form-group row mb-3">
-    <label class="col-sm-3 col-form-label text-sm-right control-label">
+    <label class="col-sm-3 col-form-label text-sm-right text-sm-end control-label">
       <{$smarty.const._MD_TAD_ASSIGNMENT_SELECT_ASSN}>
     </label>
     <div class="col-sm-9">
-      <select onChange="window.location.href='index.php?assn='+this.value" class="form-control" title="select assignment">
+      <select onChange="window.location.href='index.php?assn='+this.value" class="form-select" title="select assignment">
         <option value=''><{$smarty.const._MD_TAD_ASSIGNMENT_SELECT_ASSN}></option>
         <{foreach from=$all item=data}>
           <option value='<{$data.assn}>' <{if $assn==$data.assn}>selected<{/if}>><{$data.start_date}> <{$data.title}> (<{$data.uid_name}>) </option>
