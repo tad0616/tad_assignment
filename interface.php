@@ -14,7 +14,7 @@ $interface_icon[_MD_TAD_ASSIGNMENT_INDEX] = "fa-upload";
 $interface_menu[_MD_TAD_ASSIGNMENT_SHOW] = 'show.php';
 $interface_icon[_MD_TAD_ASSIGNMENT_SHOW] = "fa-desktop";
 
-if (is_array($xoopsModuleConfig['create_group']) and is_array($_SESSION['groups']) and array_intersect($_SESSION['groups'], $xoopsModuleConfig['create_group'])) {
+if ((is_array($xoopsModuleConfig['create_group']) and is_array($_SESSION['groups']) and array_intersect($_SESSION['groups'], $xoopsModuleConfig['create_group'])) or $_SERVER['PHP_SELF'] == '/admin.php') {
     $interface_menu[_MD_TAD_ASSIGNMENT_POST] = 'post.php';
     $interface_icon[_MD_TAD_ASSIGNMENT_POST] = "fa-plus-square";
 }
