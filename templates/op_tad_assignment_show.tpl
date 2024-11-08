@@ -23,7 +23,7 @@
       <{$title|default:''}>
     </h2>
     <{if $assn|default:false}>
-      <a href="index.php?assn=<{$assn|default:''}>" class="btn btn-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> <{$smarty.const._MD_SAVE}></a>
+      <a href="index.php?assn=<{$assn|default:''}>" class="btn btn-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> <{$smarty.const._MD_TAD_ASSIGNMENT_SAVE}></a>
         <{if $uid==$now_uid}>
           <a href="post.php?op=tad_assignment_form&assn=<{$assn|default:''}>" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
           <{if !$show}>
