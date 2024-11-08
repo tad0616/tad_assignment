@@ -85,7 +85,7 @@ function tad_assignment_form($assn = '')
     $xoopsTpl->assign('show', $show);
     $xoopsTpl->assign('op', $op);
     $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
-    $xoTheme->addStylesheet('modules/tadtools/css/font-awesome/css/font-awesome.css');
+    // $xoTheme->addStylesheet('modules/tadtools/css/font-awesome/css/font-awesome.css');
     $FormValidator = new FormValidator("#myForm", false);
     $FormValidator->render();
 }
