@@ -67,9 +67,9 @@ $modversion['templates'] = [
     ['file' => 'tad_assignment_admin.tpl', 'description' => 'tad_assignment_admin.tpl'],
 ];
 
-//---區塊設定---//
+//---區塊設定 (索引為固定值，若欲刪除區塊記得補上索引，避免區塊重複)---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'tad_new_assignment.php',
         'name' => _MI_TAD_ASSIGNMENT_BNAME1,
         'description' => _MI_TAD_ASSIGNMENT_BDESC1,

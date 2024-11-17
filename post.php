@@ -47,6 +47,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('tad_assignment_adm', $tad_assignment_adm);
 $xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/footer.php';
 /*-----------function區--------------*/
@@ -54,7 +55,7 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 //tad_assignment編輯表單
 function tad_assignment_form($assn = '')
 {
-    global $xoopsTpl, $xoTheme, $xoopsUser;
+    global $xoopsTpl, $xoTheme, $xoopsUser, $tad_assignment_adm;
     //抓取預設值
     $DBV = !empty($assn) ? get_tad_assignment($assn) : [];
 
@@ -70,7 +71,7 @@ function tad_assignment_form($assn = '')
     $show = (!isset($DBV['show'])) ? '1' : $DBV['show'];
 
     $now_uid = $xoopsUser ? $xoopsUser->uid() : 0;
-    if ($uid != $now_uid && !$_SESSION['tad_assignment_adm']) {
+    if ($uid != $now_uid && !$tad_assignment_adm) {
         redirect_header('index.php', 3, _MD_TAD_ASSIGNMENT_NO_PERM);
     }
 

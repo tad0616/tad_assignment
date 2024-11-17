@@ -1,7 +1,7 @@
 <?php
 //判斷是否對該模組有管理權限
-if (!isset($_SESSION['tad_assignment_adm'])) {
-    $_SESSION['tad_assignment_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+if (!isset($tad_assignment_adm)) {
+    $tad_assignment_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 //取得目前使用者的群組編號
 if (!isset($_SESSION['groups']) or $_SESSION['groups'] === '') {

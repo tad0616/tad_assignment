@@ -31,6 +31,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoTheme->addStylesheet('modules/tadtools/css/my-input.css');
+$xoopsTpl->assign('tad_assignment_adm', $tad_assignment_adm);
 $xoopsTpl->assign('now_op', $op);
 require_once __DIR__ . '/footer.php';
 
