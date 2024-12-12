@@ -5,7 +5,7 @@
       <div class="input-group-prepend input-group-addon">
           <span class="input-group-text"><{$smarty.const._MD_TAD_ASSIGNMENT_SELECT_ASSN}></span>
       </div>
-      <select onChange="window.location.href='show.php?assn='+this.value" class="form-select" title="select assignment">
+      <select onChange="window.location.href='show.php?assn='+this.value" class="form-control form-select" title="select assignment">
         <option value=''><{$smarty.const._MD_TAD_ASSIGNMENT_SELECT_ASSN}></option>
         <{if $select_assn_all|default:false}>
           <{foreach from=$select_assn_all item=data}>
@@ -25,7 +25,7 @@
     <{if $assn|default:false}>
       <a href="index.php?assn=<{$assn|default:''}>" class="btn btn-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> <{$smarty.const._MD_TAD_ASSIGNMENT_SAVE}></a>
         <{if $uid==$now_uid}>
-          <a href="post.php?op=tad_assignment_form&assn=<{$assn|default:''}>" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
+          <a href="post.php?op=tad_assignment_form&assn=<{$assn|default:''}>" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
           <{if !$show}>
           <span class="badge badge-dnager bg-danger"><{$smarty.const._MD_TAD_ASSIGNMENT_HIDE}></span>
           <{/if}>

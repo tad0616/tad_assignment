@@ -7,7 +7,7 @@
         <div class="input-group">
           <input type="file" name="file" class="form-control">
             <div class="input-group-append input-group-btn">
-                <button type="submit" class="btn btn-primary" name="op" value="add_type"><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
+                <button type="submit" class="btn btn-primary" name="op" value="add_type"><i class="fa fa-floppy-disk" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
             </div>
         </div>
       </div>

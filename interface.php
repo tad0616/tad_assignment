@@ -16,5 +16,5 @@ $interface_icon[_MD_TAD_ASSIGNMENT_SHOW] = "fa-desktop";
 
 if (isset($xoopsModuleConfig) and (is_array($xoopsModuleConfig['create_group']) and is_array($_SESSION['groups']) and array_intersect($_SESSION['groups'], $xoopsModuleConfig['create_group'])) or $_SERVER['PHP_SELF'] == '/admin.php') {
     $interface_menu[_MD_TAD_ASSIGNMENT_POST] = 'post.php';
-    $interface_icon[_MD_TAD_ASSIGNMENT_POST] = "fa-plus-square";
+    $interface_icon[_MD_TAD_ASSIGNMENT_POST] = "fa-square-plus";
 }

@@ -22,9 +22,9 @@
 
     <div class="form-group row mb-3">
       <label class="col-sm-2 col-form-label text-sm-right text-sm-end control-label"><{$smarty.const._MD_TAD_ASSIGNMENT_START_DATE}></label>
-      <div class="col-sm-3"><input type='text' value='<{$start_date}>' size='15'  class='form-control' name='start_date' id='start_date' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})"></div>
+      <div class="col-sm-3"><input type='text' value='<{$start_date|default:''}>' size='15'  class='form-control' name='start_date' id='start_date' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})"></div>
       <label class="col-sm-2 col-form-label text-sm-right text-sm-end control-label"><{$smarty.const._MD_TAD_ASSIGNMENT_END_DATE}></label>
-      <div class="col-sm-3"><input type='text' value='<{$end_date}>' size='15'  class='form-control' name='end_date' id='end_date' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})"></div>
+      <div class="col-sm-3"><input type='text' value='<{$end_date|default:''}>' size='15'  class='form-control' name='end_date' id='end_date' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm' , startDate:'%y-%M-%d %H:%m}'})"></div>
     </div>
 
 
@@ -50,7 +50,7 @@
     <div class="text-center">
       <input type="hidden" name="op" value="<{$op|default:''}>">
       <input type="hidden" name="assn" value="<{$assn|default:''}>">
-      <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
+      <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
     </div>
   </form>
 

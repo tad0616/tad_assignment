@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 //區塊主函式 (列出目前開放上傳的作業項目)
 function tad_new_assignment($options)
 {
