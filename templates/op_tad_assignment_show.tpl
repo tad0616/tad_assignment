@@ -34,7 +34,7 @@
   <{/if}>
 </div>
 
-<{if !$show && !$tad_assignment_adm|default:false && $assn|default:'' && $uid!=$now_uid}>
+<{if !$show && !$smarty.session.tad_assignment_adm|default:false && $assn|default:'' && $uid!=$now_uid}>
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TAD_ASSIGNMENT_HIDE}></h2>
   <div class="alert alert-warning">
     <h3><{$smarty.const._MD_TAD_ASSIGNMENT_HIDE}></h3>
@@ -48,14 +48,14 @@
         <th><{$smarty.const._MD_TAD_ASSIGNMENT_FILENAME}></th>
         <th><{$smarty.const._MD_TAD_ASSIGNMENT_DESC}></th>
         <th><{$smarty.const._MD_TAD_ASSIGNMENT_AUTHOR}></th>
-        <{if $tad_assignment_adm|default:false}><th><{$smarty.const._TAD_FUNCTION}></th><{/if}>
+        <{if $smarty.session.tad_assignment_adm|default:false}><th><{$smarty.const._TAD_FUNCTION}></th><{/if}>
       </tr>
       <tbody>
       <{foreach from=$file_data item=all}>
         <tr>
           <td><{$all.up_time}></td>
           <td>
-            <{if $now_op=="tad_assignment_show" and $show!="1" and !$tad_assignment_adm}>
+            <{if $now_op=="tad_assignment_show" and $show!="1" and !$smarty.session.tad_assignment_adm}>
               <{$all.file_name}>
             <{elseif $now_op=="tad_assignment_show"}>
             <a href='<{$smarty.const._TAD_ASSIGNMENT_UPLOAD_URL}><{$all.assn}>/<{$all.asfsn}>.<{$all.sub_name}>'  class="assignment_fancy_<{$assn|default:''}>" rel="group" title="<{$all.author}> (<{$all.up_time}>) <{$all.file_name}>"><{$all.file_name}></a>
@@ -63,7 +63,7 @@
           </td>
           <td><{$all.desc}></td>
           <td><{$all.author}></td>
-          <{if $tad_assignment_adm|default:false}>
+          <{if $smarty.session.tad_assignment_adm|default:false}>
           <td>
             <a href="javascript:delete_func(<{$all.asfsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
           </td>

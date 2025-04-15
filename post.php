@@ -7,11 +7,11 @@ $xoopsOption['template_main'] = 'tad_assignment_index.tpl';
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-if (!array_intersect($_SESSION['groups'], $xoopsModuleConfig['create_group'])) {
+if (!array_intersect($_SESSION['xoopsUserGroups'], $xoopsModuleConfig['create_group'])) {
     redirect_header('index.php', 3, _MD_TAD_ASSIGNMENT_NO_PERM);
 }
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op   = Request::getString('op');
 $assn = Request::getInt('assn');
 
 switch ($op) {
@@ -47,7 +47,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
-$xoopsTpl->assign('tad_assignment_adm', $tad_assignment_adm);
 $xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/footer.php';
 /*-----------function區--------------*/
@@ -55,23 +54,23 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 //tad_assignment編輯表單
 function tad_assignment_form($assn = '')
 {
-    global $xoopsTpl, $xoTheme, $xoopsUser, $tad_assignment_adm;
+    global $xoopsTpl, $xoTheme, $xoopsUser;
     //抓取預設值
     $DBV = !empty($assn) ? get_tad_assignment($assn) : [];
 
     //預設值設定
 
-    $assn = (!isset($DBV['assn'])) ? '' : $DBV['assn'];
-    $title = (!isset($DBV['title'])) ? '' : $DBV['title'];
-    $passwd = (!isset($DBV['passwd'])) ? '' : $DBV['passwd'];
+    $assn       = (!isset($DBV['assn'])) ? '' : $DBV['assn'];
+    $title      = (!isset($DBV['title'])) ? '' : $DBV['title'];
+    $passwd     = (!isset($DBV['passwd'])) ? '' : $DBV['passwd'];
     $start_date = (!isset($DBV['start_date'])) ? date('Y-m-d H:i', xoops_getUserTimestamp(time())) : date('Y-m-d H:i', xoops_getUserTimestamp($DBV['start_date']));
-    $end_date = (!isset($DBV['end_date'])) ? date('Y-m-d H:i', xoops_getUserTimestamp(time() + 86400)) : date('Y-m-d H:i', xoops_getUserTimestamp($DBV['end_date']));
-    $note = (!isset($DBV['note'])) ? '' : $DBV['note'];
-    $uid = (!isset($DBV['uid'])) ? '' : $DBV['uid'];
-    $show = (!isset($DBV['show'])) ? '1' : $DBV['show'];
+    $end_date   = (!isset($DBV['end_date'])) ? date('Y-m-d H:i', xoops_getUserTimestamp(time() + 86400)) : date('Y-m-d H:i', xoops_getUserTimestamp($DBV['end_date']));
+    $note       = (!isset($DBV['note'])) ? '' : $DBV['note'];
+    $uid        = (!isset($DBV['uid'])) ? '' : $DBV['uid'];
+    $show       = (!isset($DBV['show'])) ? '1' : $DBV['show'];
 
     $now_uid = $xoopsUser ? $xoopsUser->uid() : 0;
-    if ($uid != $now_uid && !$tad_assignment_adm) {
+    if (!empty($assn) && $uid != $now_uid && !$_SESSION['tad_assignment_adm']) {
         redirect_header('index.php', 3, _MD_TAD_ASSIGNMENT_NO_PERM);
     }
 
@@ -95,10 +94,10 @@ function tad_assignment_form($assn = '')
 function insert_tad_assignment()
 {
     global $xoopsDB, $xoopsUser;
-    $uid = $xoopsUser->uid();
+    $uid        = $xoopsUser->uid();
     $start_date = strtotime($_POST['start_date']);
-    $end_date = strtotime($_POST['end_date']);
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_assignment') . '` (`title`, `passwd`, `start_date`, `end_date`, `note`, `uid`, `show`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    $end_date   = strtotime($_POST['end_date']);
+    $sql        = 'INSERT INTO `' . $xoopsDB->prefix('tad_assignment') . '` (`title`, `passwd`, `start_date`, `end_date`, `note`, `uid`, `show`) VALUES (?, ?, ?, ?, ?, ?, ?)';
     Utility::query($sql, 'sssssis', [$_POST['title'], $_POST['passwd'], $start_date, $end_date, $_POST['note'], $uid, $_POST['show']]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
@@ -111,9 +110,9 @@ function insert_tad_assignment()
 function update_tad_assignment($assn = '')
 {
     global $xoopsDB, $xoopsUser;
-    $uid = $xoopsUser->uid();
+    $uid        = $xoopsUser->uid();
     $start_date = strtotime($_POST['start_date']);
-    $end_date = strtotime($_POST['end_date']);
+    $end_date   = strtotime($_POST['end_date']);
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_assignment') . '` SET `title` = ?, `passwd` = ?, `start_date` = ?, `end_date` = ?, `note` = ?, `uid` = ?, `show` = ? WHERE `assn` = ?';
     Utility::query($sql, 'sssssisi', [

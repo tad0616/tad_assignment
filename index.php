@@ -8,7 +8,7 @@ $xoopsOption['template_main'] = 'tad_assignment_index.tpl';
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op   = Request::getString('op');
 $assn = Request::getInt('assn');
 
 switch ($op) {
@@ -32,7 +32,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
-$xoopsTpl->assign('tad_assignment_adm', $tad_assignment_adm);
 $xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
@@ -42,11 +41,11 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 function list_tad_assignment_menu()
 {
     global $xoopsDB, $xoopsTpl;
-    $now = xoops_getUserTimestamp(time());
-    $sql = 'SELECT `assn`, `title`, `uid`, `start_date` FROM `' . $xoopsDB->prefix('tad_assignment') . '` WHERE `start_date` < ? AND `end_date` > ? ORDER BY `start_date` DESC';
+    $now    = xoops_getUserTimestamp(time());
+    $sql    = 'SELECT `assn`, `title`, `uid`, `start_date` FROM `' . $xoopsDB->prefix('tad_assignment') . '` WHERE `start_date` < ? AND `end_date` > ? ORDER BY `start_date` DESC';
     $result = Utility::query($sql, 'ss', [$now, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $i = 0;
+    $i    = 0;
     $data = [];
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
@@ -54,9 +53,9 @@ function list_tad_assignment_menu()
             $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
-        $data[$i]['assn'] = $assn;
-        $data[$i]['title'] = $title;
-        $data[$i]['uid_name'] = $uid_name;
+        $data[$i]['assn']       = $assn;
+        $data[$i]['title']      = $title;
+        $data[$i]['uid_name']   = $uid_name;
         $data[$i]['start_date'] = date('Y-m-d H:i', xoops_getUserTimestamp($start_date));
         $i++;
     }
@@ -93,9 +92,9 @@ function insert_tad_assignment_file()
     if ($_POST['passwd'] != $assignment['passwd']) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_ASSIGNMENT_WRONG_PASSWD);
     }
-    $now = date('Y-m-d H:i:s');
-    $email = $xoopsUser ? $xoopsUser->email() : $_POST['email'];
-    $email = $email ? $email : '';
+    $now    = date('Y-m-d H:i:s');
+    $email  = $xoopsUser ? $xoopsUser->email() : $_POST['email'];
+    $email  = $email ? $email : '';
     $author = $xoopsUser ? $xoopsUser->name() : $_POST['author'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_assignment_file') . '` (`assn`, `my_passwd`, `show_name`, `desc`, `author`, `email`, `score`, `comment`, `up_time`) VALUES (?, ?, ?, ?, ?, ?, 0, "", ?)';
@@ -120,9 +119,9 @@ function upload_file($asfsn = '', $assn = '')
     if ($flv_handle->uploaded) {
         //$name=substr($_FILES['file']['name'],0,-4);
         $flv_handle->file_safe_name = false;
-        $flv_handle->mime_check = false;
+        $flv_handle->mime_check     = false;
 
-        $flv_handle->auto_create_dir = true;
+        $flv_handle->auto_create_dir    = true;
         $flv_handle->file_new_name_body = (string) ($asfsn);
         $flv_handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
         $now = date('Y-m-d H:i:s');

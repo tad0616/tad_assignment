@@ -14,7 +14,7 @@
       </select>
     </div>
   </div>
-<{elseif $tad_assignment_adm}>
+<{elseif $smarty.session.tad_assignment_adm}>
   <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TAD_ASSIGNMENT_EMPTY}></h2>
   <div class="jumbotron bg-light p-5 rounded-lg m-3">
     <{$smarty.const._MD_TAD_ASSIGNMENT_EMPTY}>

@@ -9,8 +9,8 @@ $xoopsOption['template_main'] = 'tad_assignment_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$assn = Request::getInt('assn');
+$op    = Request::getString('op');
+$assn  = Request::getInt('assn');
 $asfsn = Request::getInt('asfsn');
 
 switch ($op) {
@@ -31,7 +31,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
-$xoopsTpl->assign('tad_assignment_adm', $tad_assignment_adm);
 $xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
@@ -41,10 +40,10 @@ function list_tad_assignment_menu()
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT `assn`, `title`, `uid`, `start_date` FROM `' . $xoopsDB->prefix('tad_assignment') . '` ORDER BY `start_date` DESC';
+    $sql    = 'SELECT `assn`, `title`, `uid`, `start_date` FROM `' . $xoopsDB->prefix('tad_assignment') . '` ORDER BY `start_date` DESC';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $i = 0;
+    $i       = 0;
     $alldata = [];
     while (list($assn, $title, $uid, $start_date) = $xoopsDB->fetchRow($result)) {
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
@@ -52,9 +51,9 @@ function list_tad_assignment_menu()
             $uid_name = \XoopsUser::getUnameFromId($uid, 0);
         }
 
-        $alldata[$i]['assn'] = $assn;
-        $alldata[$i]['title'] = $title;
-        $alldata[$i]['uid_name'] = $uid_name;
+        $alldata[$i]['assn']       = $assn;
+        $alldata[$i]['title']      = $title;
+        $alldata[$i]['uid_name']   = $uid_name;
         $alldata[$i]['start_date'] = date('Y-m-d H:i', xoops_getUserTimestamp($start_date));
         $i++;
     }
@@ -74,24 +73,24 @@ function list_tad_assignment_file($assn = '')
         $xoopsTpl->assign($k, $v);
     }
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `assn`=? ORDER BY `up_time` DESC';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `assn`=? ORDER BY `up_time` DESC';
     $result = Utility::query($sql, 'i', [$assn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $i = 0;
+    $i    = 0;
     $data = [];
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         foreach ($all as $k => $v) {
-            $$k = $v;
+            $$k           = $v;
             $data[$i][$k] = $v;
         }
 
         $show_name = (empty($show_name)) ? $author . _MD_TAD_ASSIGNMENT_UPLOAD_FILE : $show_name;
-        $filepart = explode('.', $file_name);
+        $filepart  = explode('.', $file_name);
         foreach ($filepart as $ff) {
             $sub_name = mb_strtolower($ff);
         }
 
-        $data[$i]['sub_name'] = $sub_name;
+        $data[$i]['sub_name']  = $sub_name;
         $data[$i]['show_name'] = $show_name;
 
         $i++;
@@ -113,7 +112,7 @@ function delete_tad_assignment_file($asfsn = '')
 {
     global $xoopsDB;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn`=?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn`=?';
     $result = Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (false !== ($all = $xoopsDB->fetchArray($result))) {

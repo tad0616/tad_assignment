@@ -7,7 +7,7 @@ $xoopsOption['template_main'] = 'tad_assignment_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op   = Request::getString('op');
 $assn = Request::getInt('assn');
 $type = Request::getString('type');
 
@@ -31,7 +31,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoTheme->addStylesheet('modules/tadtools/css/my-input.css');
-$xoopsTpl->assign('tad_assignment_adm', $tad_assignment_adm);
 $xoopsTpl->assign('now_op', $op);
 require_once __DIR__ . '/footer.php';
 
@@ -41,8 +40,8 @@ function add_type_form()
 {
     global $xoopsDB, $xoopsTpl;
 
-    $all = [];
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_types') . '` ORDER BY `type`';
+    $all    = [];
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_types') . '` ORDER BY `type`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 0;
@@ -79,7 +78,7 @@ function del_type($type = '')
 function mk_type()
 {
     global $xoopsDB;
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_types') . '` ORDER BY `type`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_assignment_types') . '` ORDER BY `type`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($type) = $xoopsDB->fetchRow($result)) {
