@@ -112,29 +112,59 @@ function insert_tad_assignment_file()
 function upload_file($asfsn = '', $assn = '')
 {
     global $xoopsDB;
+    // 1.先做黑名單檢查
+    $origName = $_FILES['file']['name'] ?? '';
+    $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+    // 可依需求加更多的副檔名
+    $forbidden = ['php', 'php3', 'php4', 'php5', 'phtml', 'js'];
+    if (in_array($ext, $forbidden)) {
+        // 刪除黑名單上傳紀錄
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` 
+                  WHERE `asfsn` = ?';
+        Utility::query($sql, 'i', [$asfsn])
+            or Utility::web_error($sql, __FILE__, __LINE__);
+            
+        // alert 並回上一頁
+        echo '<script>'
+             . "alert('因資安因素，不允許上傳 .{$ext} 檔案');"
+             . 'history.back();'
+             . '</script>';
+        exit;
+    }
+
+    // 2. 再載入上傳處理元件
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
     set_time_limit(0);
     ini_set('memory_limit', '220M');
+
     $flv_handle = new \Verot\Upload\Upload($_FILES['file'], 'zh_TW');
     if ($flv_handle->uploaded) {
-        //$name=substr($_FILES['file']['name'],0,-4);
-        $flv_handle->file_safe_name = false;
-        $flv_handle->mime_check     = false;
+        $flv_handle->file_safe_name      = false;
+        $flv_handle->mime_check          = false;
+        $flv_handle->auto_create_dir     = true;
+        $flv_handle->file_new_name_body  = (string) $asfsn;
 
-        $flv_handle->auto_create_dir    = true;
-        $flv_handle->file_new_name_body = (string) ($asfsn);
+        // 3. 通過黑名單檢查後才執行上傳
         $flv_handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
+
         $now = date('Y-m-d H:i:s');
         if ($flv_handle->processed) {
             $flv_handle->clean();
-            $sql = 'UPDATE `' . $xoopsDB->prefix('tad_assignment_file') . '` SET `file_name`=?, `file_size`=?, `file_type`=?, `up_time`=? WHERE `asfsn`=?';
-            Utility::query($sql, 'sissi', [$_FILES['file']['name'], $_FILES['file']['size'], $_FILES['file']['type'], $now, $asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
+            $sql = 'UPDATE `' . $xoopsDB->prefix('tad_assignment_file') . '` 
+                      SET `file_name`=?,`file_size`=?,`file_type`=?,`up_time`=? 
+                    WHERE `asfsn`=?';
+            Utility::query($sql, 'sissi', [
+                $_FILES['file']['name'],
+                $_FILES['file']['size'],
+                $_FILES['file']['type'],
+                $now,
+                $asfsn
+            ]) or Utility::web_error($sql, __FILE__, __LINE__);
         } else {
-            $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn` = ?';
+            $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` 
+                      WHERE `asfsn`=?';
             Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-            redirect_header($_SERVER['PHP_SELF'], 3, 'Error:' . $flv_handle->error);
+            redirect_header($_SERVER['PHP_SELF'], 3, 'Error: ' . $flv_handle->error);
         }
     }
 }
