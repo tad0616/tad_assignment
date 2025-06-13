@@ -26,3 +26,5 @@ define('_MI_TAD_ASSIGNMENT_HELP_OVERVIEW', 'Overview');
 
 define('_MI_TAD_ASSIGNMENT_CREATE_GROUP', 'Create groups for uploading jobs');
 define('_MI_TAD_ASSIGNMENT_CREATE_GROUP_DESC', 'Please select the group where you want to create an upload job. Members of the group will be able to create an upload job after logging in.');
+define('_MI_TAD_ASSIGNMENT_FORBIDDEN', 'Forbidden filename');
+define('_MI_TAD_ASSIGNMENT_FORBIDDEN_DESC', 'For security reasons, please separate the uploaded file name with ";".');

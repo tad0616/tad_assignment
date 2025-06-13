@@ -26,3 +26,6 @@ define('_MI_TAD_ASSIGNMENT_HELP_OVERVIEW', '概要');
 
 define('_MI_TAD_ASSIGNMENT_CREATE_GROUP', '可建立上傳作業的群組');
 define('_MI_TAD_ASSIGNMENT_CREATE_GROUP_DESC', '請選擇可建立上傳作業的群組，群組中的成員登入後即可建立上傳作業。');
+
+define('_MI_TAD_ASSIGNMENT_FORBIDDEN', '禁止上傳的副檔名');
+define('_MI_TAD_ASSIGNMENT_FORBIDDEN_DESC', '考量資安因素，禁止上傳的副檔名，請用「;」隔開。');

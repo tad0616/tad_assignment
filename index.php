@@ -86,8 +86,8 @@ function insert_tad_assignment_file()
     if (empty($_FILES['file']['name'])) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TAD_ASSIGNMENT_NEED_FILE);
     }
-
-    $assignment = get_tad_assignment($_POST['assn']);
+    $assn       = (int) $_POST['assn'];
+    $assignment = get_tad_assignment($assn);
 
     if ($_POST['passwd'] != $assignment['passwd']) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_ASSIGNMENT_WRONG_PASSWD);
@@ -98,35 +98,51 @@ function insert_tad_assignment_file()
     $author = $xoopsUser ? $xoopsUser->name() : $_POST['author'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_assignment_file') . '` (`assn`, `my_passwd`, `show_name`, `desc`, `author`, `email`, `score`, `comment`, `up_time`) VALUES (?, ?, ?, ?, ?, ?, 0, "", ?)';
-    Utility::query($sql, 'issssss', [$_POST['assn'], '', $author, $_POST['desc'], $author, $email, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'issssss', [$assn, '', $author, $_POST['desc'], $author, $email, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $asfsn = $xoopsDB->getInsertId();
 
-    upload_file($asfsn, $_POST['assn']);
+    upload_file($asfsn, $assn);
 
-    return $_POST['assn'];
+    return $assn;
 }
 
 //上傳檔案
 function upload_file($asfsn = '', $assn = '')
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsModuleConfig;
+    // 1.先做黑名單檢查
+    $origName = $_FILES['file']['name'] ?? '';
+    $ext      = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+    // 可依需求加更多的副檔名
+    $forbidden_ext = $xoopsModuleConfig['forbidden'] ? explode(',', $xoopsModuleConfig['forbidden']) : ['php', 'php3', 'php4', 'php5', 'phtml', 'js', 'sh'];
+    if (in_array($ext, $forbidden_ext)) {
+        // 刪除黑名單上傳紀錄
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '`
+                WHERE `asfsn` = ?';
+        Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
+        // alert 並回上一頁
+        redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MD_TAD_ASSIGNMENT_FORBIDDEN, $ext));
+    }
+
+    // 2. 再載入上傳處理元件
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
     set_time_limit(0);
     ini_set('memory_limit', '220M');
-    $flv_handle = new \Verot\Upload\Upload($_FILES['file'], 'zh_TW');
-    if ($flv_handle->uploaded) {
-        //$name=substr($_FILES['file']['name'],0,-4);
-        $flv_handle->file_safe_name = false;
-        $flv_handle->mime_check     = false;
-
-        $flv_handle->auto_create_dir    = true;
-        $flv_handle->file_new_name_body = (string) ($asfsn);
-        $flv_handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
+    $handle = new \Verot\Upload\Upload($_FILES['file'], 'zh_TW');
+    if ($handle->uploaded) {
+        $handle->file_safe_name     = false;
+        $handle->mime_check         = false;
+        $ext                        = pathinfo($handle->file_src_name, PATHINFO_EXTENSION); // 取得原始副檔名
+        $handle->file_new_name_ext  = $ext; // 自動保留副檔名
+        $handle->auto_create_dir    = true;
+        $handle->file_new_name_body = (int) $asfsn;
+        $handle->process(_TAD_ASSIGNMENT_UPLOAD_DIR . "{$assn}/");
         $now = date('Y-m-d H:i:s');
-        if ($flv_handle->processed) {
-            $flv_handle->clean();
+        if ($handle->processed) {
+            $handle->clean();
             $sql = 'UPDATE `' . $xoopsDB->prefix('tad_assignment_file') . '` SET `file_name`=?, `file_size`=?, `file_type`=?, `up_time`=? WHERE `asfsn`=?';
             Utility::query($sql, 'sissi', [$_FILES['file']['name'], $_FILES['file']['size'], $_FILES['file']['type'], $now, $asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -134,7 +150,7 @@ function upload_file($asfsn = '', $assn = '')
             $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn` = ?';
             Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-            redirect_header($_SERVER['PHP_SELF'], 3, 'Error:' . $flv_handle->error);
+            redirect_header($_SERVER['PHP_SELF'], 3, 'Error:' . $handle->error);
         }
     }
 }

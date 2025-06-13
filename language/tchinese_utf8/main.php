@@ -37,3 +37,4 @@ define('_MD_TAD_ASSIGNMENT_NEED_FILE', '無選擇任何上傳檔案，故無法�
 define('_MD_TAD_ASSIGNMENT_DISPLAY_YES', '是，其他人可以觀看');
 define('_MD_TAD_ASSIGNMENT_DISPLAY_NO', '否，不開放');
 define('_MD_TAD_ASSIGNMENT_NO_PERM', '沒有建立上傳作業的權限');
+define('_MD_TAD_ASSIGNMENT_FORBIDDEN', '因資安因素，不允許上傳 .%s 檔案。');

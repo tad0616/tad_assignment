@@ -36,3 +36,4 @@ define('_MD_TAD_ASSIGNMENT_NEED_FILE', 'No files were selected, so they can not 
 define('_MD_TAD_ASSIGNMENT_DISPLAY_YES', 'that other people can view');
 define('_MD_TAD_ASSIGNMENT_DISPLAY_NO', 'No, don\' show it to others');
 define('_MD_TAD_ASSIGNMENT_NO_PERM', 'No permission to create an upload job');
+define('_MD_TAD_ASSIGNMENT_FORBIDDEN', 'Uploading is not allowed due to security reasons.%s files.');

@@ -1,3 +1,8 @@
+Tad Assignment 3.1 (released 2025-06-13)
+====================================
+1. New setting to disable uploading file types.
+2. Thanks to RyanisyydsTT (https://github.com/RyanisyydsTT) for the security patch.
+
 Tad Assignment 3.0 (2024-12-12 released)
 ====================================
 1. Support XOOPS 2.5.11
