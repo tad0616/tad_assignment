@@ -147,7 +147,8 @@ function upload_file($asfsn = '', $assn = '')
             Utility::query($sql, 'sissi', [$_FILES['file']['name'], $_FILES['file']['size'], $_FILES['file']['type'], $now, $asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         } else {
-            $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '` WHERE `asfsn` = ?';
+            $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '`
+                      WHERE `asfsn`=?';
             Utility::query($sql, 'i', [$asfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
             redirect_header($_SERVER['PHP_SELF'], 3, 'Error:' . $handle->error);
