@@ -7,7 +7,7 @@ $xoopsOption['template_main'] = 'tad_assignment_index.tpl';
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-if (!array_intersect($_SESSION['xoopsUserGroups'], $xoopsModuleConfig['create_group'])) {
+if (!array_intersect((array) $_SESSION['xoopsUserGroups'], (array) $xoopsModuleConfig['create_group'])) {
     redirect_header('index.php', 3, _MD_TAD_ASSIGNMENT_NO_PERM);
 }
 /*-----------執行動作判斷區----------*/

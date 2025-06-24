@@ -116,7 +116,7 @@ function upload_file($asfsn = '', $assn = '')
     $origName = $_FILES['file']['name'] ?? '';
     $ext      = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
     // 可依需求加更多的副檔名
-    $forbidden_ext = $xoopsModuleConfig['forbidden'] ? explode(',', $xoopsModuleConfig['forbidden']) : ['php', 'php3', 'php4', 'php5', 'phtml', 'js', 'sh'];
+    $forbidden_ext = $xoopsModuleConfig['forbidden'] ? explode(';', $xoopsModuleConfig['forbidden']) : ['php', 'php3', 'php4', 'php5', 'phtml', 'js', 'sh'];
     if (in_array($ext, $forbidden_ext)) {
         // 刪除黑名單上傳紀錄
         $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_assignment_file') . '`
