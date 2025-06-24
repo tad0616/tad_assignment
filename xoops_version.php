@@ -3,9 +3,8 @@ $modversion = [];
 global $xoopsConfig;
 
 //---模組基本資訊---//
-$modversion['name'] = _MI_TAD_ASSIGNMENT_NAME;
-// $modversion['version'] = 2.7;
-$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '3.1.0-Stable' : '3.1';
+$modversion['name']        = _MI_TAD_ASSIGNMENT_NAME;
+$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '3.2.0-Stable' : '3.2';
 $modversion['description'] = _MI_TAD_ASSIGNMENT_DESC;
 $modversion['author']      = _MI_TAD_ASSIGNMENT_AUTHOR;
 $modversion['credits']     = _MI_TAD_ASSIGNMENT_CREDITS;
@@ -16,7 +15,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2025-06-13';
+$modversion['release_date']        = '2025-06-24';
 $modversion['module_website_url']  = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -87,11 +86,7 @@ $modversion['config'] = [
         'formtype' => 'group_multi',
         'valuetype' => 'array',
         'default' => [1],
-    ],
-];
-
-$modversion['config'] = [
-    [
+    ], [
         'name' => 'forbidden',
         'title' => '_MI_TAD_ASSIGNMENT_FORBIDDEN',
         'description' => '_MI_TAD_ASSIGNMENT_FORBIDDEN_DESC',

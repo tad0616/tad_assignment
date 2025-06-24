@@ -1,3 +1,8 @@
+Tad Assignment 3.2 (released 2025-06-24)
+====================================
+1. Fixed the "Create groups for uploading jobs" preference not showing up.
+2. Fixed the problem that the "Groups that can create upload jobs" preference would cause an error if it was not configured.
+
 Tad Assignment 3.1 (released 2025-06-13)
 ====================================
 1. New setting to disable uploading file types.
